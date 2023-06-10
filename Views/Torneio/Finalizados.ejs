@@ -1,0 +1,39 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbarUser.ejs') %>
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Torneios Anteriores</h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Data</th>
+                        <th>Formato</th>
+                        <th>Tipo Torneio</th>
+                        <th>Classificação</th>
+                        <th>Pontos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% dados.torneios.forEach(torneio => { %>
+                        <tr>
+                            <!--td><a class="nav-link" href="/torneios/detalhe/< % =  torneio.id % >">< % = torneio.nome % ></a></td-->
+                            <td><a class="nav-link" href="/"><%= torneio.nome %></a></td>
+                            <td><%= torneio.data %></td>
+                            <td><%= torneio.formatoNome %></td>
+                            <td><%= torneio.tipoTorneioNome %></td>
+                            <td><%= torneio.posicao %></td>
+                            <td><%= torneio.pontos %></td>
+                            <td><a href="/torneios/classificacao/<%= torneio.id %> " class="btn btn-warning">Classificação Geral</a></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>

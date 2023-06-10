@@ -1,0 +1,38 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs') %>
+<div class="container">
+    <h2>Tipo de Formato</h2>
+    <a href="/formatos/new" class="btn btn-success">Inserir Formato</a>
+    <hr>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nome</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% formatos.forEach(formato => { %>
+                <tr>
+                    <td><%= formato.nome %></td>
+                    <td>
+                        <form method="post" action="/formatos/delete" style="display: inline"
+                            onsubmit="confirmDelete(event,this);">
+                            <input type="hidden" name="id" value="<%= formatos.id %>">
+                            <button class="btn btn-danger">Deletar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+<%- include('../partials/footer.ejs') %>
+<script>
+    function confirmDelete(event, form){
+        event.preventDefault();
+        var decision = confirm("Você quer deletar este formato?");
+        if(decision){
+            form.submit();
+        }
+    }
+    </script>

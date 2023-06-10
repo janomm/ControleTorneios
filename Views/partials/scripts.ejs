@@ -1,0 +1,38 @@
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    function buscaCep(element){
+        var logradouro = document.getElementById("logradouro");
+        var bairro = document.getElementById("bairro");
+        var cidade = document.getElementById("cidade");
+        var uf = document.getElementById("uf");
+        var ibge = document.getElementById("ibge");
+
+        logradouro.value = "";
+        bairro.value = "";
+        cidade.value = "";
+        uf.value = "";
+        ibge.value = "";
+
+        var url = "https://viacep.com.br/ws/" + element.value + "/json/";
+        axios.get(url).then(data =>{
+            var r = data.data;
+
+            cidade.value = r.localidade;
+            uf.value = r.uf;
+            ibge.value = r.ibge;
+
+            // cidade.readonly = true;
+            // uf.readonly = true;
+            // ibge.readonly = true;
+
+            if(r.logradouro != ""){
+                logradouro.value = r.logradouro;
+                // logradouro.readonly = true;
+            }
+            if(r.bairro != ""){
+                bairro.value = r.bairro;
+                // bairro.readonly = true;
+            }
+        })
+    }
+</script>

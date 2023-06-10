@@ -1,0 +1,45 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs') %>
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Ranking <%= dados.ranking.nome %> - <%= dados.ranking.dtInicio %> até <%= dados.ranking.dtFinal %></h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Posicao</th>
+                        <th>Nome</th>
+                        <th>Pontos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% dados.classificacao.forEach((c,i) => { %>
+                        <tr>
+                            <td><%= (i + 1) %></td>
+                            <td><%= c.nome %></td>
+                            <td><%= c.pontos %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+            <form method="post" action="/rankings/delete" style="display: inline"
+                onsubmit="confirmDelete(event,this);">
+                <input type="hidden" name="id" value="<%= dados.ranking.id %>">
+                <button class="btn btn-danger">Deletar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>
+<script>
+    function confirmDelete(event, form){
+        event.preventDefault();
+        var decision = confirm("Você quer deletar este ranking?");
+        if(decision){
+            form.submit();
+        }
+    }
+    </script>

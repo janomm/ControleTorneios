@@ -1,0 +1,23 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbarUser.ejs') %>
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Editar Jogador</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" action="/jogadores/update">
+                <input class="form-control" type="hidden" required name="id" value="<%= jogador.id %>"><br> 
+                <input class="form-control" type="text" required name="nome" placeholder="Nome" value="<%= jogador.nome %>"><br> 
+                <input class="form-control" type="email" required name="email" placeholder="E-mail" value="<%= jogador.email %>"><br> 
+                <input class="form-control" type="text" required name="nick" placeholder="Nick" value="<%= jogador.nick %>"><br> 
+                <input class="form-control" type="date" required name="dtNascimento" placeholder="Data de Nascimento" value="<%= jogador.dtNascimento %>"><br> 
+
+
+                <button class="btn btn-success">Atualizar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>

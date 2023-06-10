@@ -1,0 +1,29 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs') %>
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Novo Ranking</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" action="/rankings/save">
+                <input class="form-control" type="text" required name="nome" placeholder="Nome"><br> 
+
+                <select class="form-control" name="idTipoTorneio" required>
+                    <option value="">Tipo de Torneio</option>
+                    <% tipoTorneios.forEach(tipoTorneio => { %>
+                        <option value="<%= tipoTorneio.id %>"><%= tipoTorneio.nome %></option>
+                    <% }) %>
+                </select><br>
+
+                <input class="form-control" type="date" required name="dtInicio" placeholder="Data Início"><br>
+                <input class="form-control" type="date" required name="dtFinal" placeholder="Data Final"><br> 
+
+                <button class="btn btn-success">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>
+<%- include('../partials/scripts.ejs') %>

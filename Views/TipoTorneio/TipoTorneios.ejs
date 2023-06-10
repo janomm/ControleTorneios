@@ -1,0 +1,38 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs') %>
+<div class="container">
+    <h2>Tipo de Torneios</h2>
+    <a href="/tipoTorneios/new" class="btn btn-success">Inserir Tipo de Torneio</a>
+    <hr>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nome</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% tipoTorneios.forEach(tipoTorneio => { %>
+                <tr>
+                    <td><%= tipoTorneio.nome %></td>
+                    <td>
+                        <form method="post" action="/tipoTorneios/delete" style="display: inline"
+                            onsubmit="confirmDelete(event,this);">
+                            <input type="hidden" name="id" value="<%= tipoTorneio.id %>">
+                            <button class="btn btn-danger">Deletar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+<%- include('../partials/footer.ejs') %>
+<script>
+    function confirmDelete(event, form){
+        event.preventDefault();
+        var decision = confirm("Você quer deletar este tipo de torneio?");
+        if(decision){
+            form.submit();
+        }
+    }
+    </script>

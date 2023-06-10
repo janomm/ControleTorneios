@@ -1,0 +1,31 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbarUser.ejs') %>
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2><%= dados.torneio.nome %> - <%= dados.torneio.data %></h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Jogador</th>
+                        <th>Pontuação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% dados.jogadores.forEach(jogador => { %>
+                        <tr>
+                            <td><%= jogador.posicao %></td>
+                            <td><%= jogador.nomeJogador %></td>
+                            <td><%= jogador.pontos %></td>
+                        </tr>
+                    <%}) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>

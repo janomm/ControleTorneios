@@ -1,0 +1,36 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbarUser.ejs') %>
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Bem Vindo <%= dados.jogador.nome %></h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <h2>Próximos Torneios</h2>
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th>Data</th>
+                        <th>Formato</th>
+                        <th>Tipo Torneio</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% dados.torneios.forEach(torneio => { %>
+                        <tr>
+                            <td><a class="nav-link" href="/torneios/detalhe/<%= torneio.id %>"><%= torneio.nome %></a></td>
+                            <td><%= torneio.data %></td>
+                            <td><%= torneio.FormatoNome %></td>
+                            <td><%= torneio.TipoTorneioNome %></td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>
+
+

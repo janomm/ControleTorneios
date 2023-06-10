@@ -1,0 +1,63 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs') %>
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2><%= dados.torneio.nome %> - <%= dados.torneio.data %></h2>
+        </div>
+        <div class="card-body">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Jogador</th>
+                        <th>Pontuação</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if(dados.torneio.habilitaTorneio == 0){ %>
+                        <form method="post" action="/torneios/inscrito/atualiza">
+                            <input type="hidden" name="idTorneio" value="<%= dados.torneio.id %>">
+                            <% dados.jogadores.forEach(jogador => { %>
+                            <tr>
+                                <td><input type="hidden" name="idJogador" value="<%= jogador.idJogador %>">
+                                    <input type="text" class="form-control" name="posicao" value="<%= jogador.posicao %>"></td>
+                                <td><%= jogador.nomeJogador %></td>
+                                <td><input type="text" class="form-control" name="pontos" value="<%= jogador.pontos %>"></td>
+                            </tr>
+                            <%})%>
+                        <tr><td><button class="btn btn-success">Atualizar</button></td></tr>
+                        </form>
+                    <%} else { dados.jogadores.forEach(jogador => { %>
+                        <tr>
+                            <td><%= jogador.pontos %></td>
+                            <td><%= jogador.nomeJogador %></td>
+                            <td><%= jogador.posicao %></td>
+                            <% if(dados.torneio.habilitaTorneio == 1){ %>
+                                <td>
+                                    <form method="post" action="/torneios/inscrito/delete" style="display: inline"
+                                        onsubmit="confirmDelete(event,this);">
+                                        <input type="hidden" name="idJogador" value="<%= jogador.idJogador %>">
+                                        <input type="hidden" name="idTorneio" value="<%= dados.torneio.id %>">
+                                        <button class="btn btn-danger">Remover</button>
+                                    </form>
+                                </td>
+                            <%}%>
+                        </tr>
+                    <%})}%>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>
+<script>
+    function confirmDelete(event, form){
+        event.preventDefault();
+        var decision = confirm("Você quer remover este jogador?");
+        if(decision){
+            form.submit();
+        }
+    }
+    </script>

@@ -1,0 +1,41 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs') %>
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Novo Torneio</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" action="/torneios/save">
+                <input class="form-control" type="text" required name="nome" placeholder="Nome"><br> 
+                <input class="form-control" type="date" required name="data" placeholder="Data Torneio"><br> 
+                
+                <select class="form-control" name="idFormato" required>
+                    <option value="">Formato</option>
+                    <% dados.formatos.forEach(formato => { %>
+                        <option value="<%= formato.id %>"><%= formato.nome %></option>
+                    <% }) %>
+                </select><br>
+                
+                <select class="form-control" name="idTipoTorneio" required>
+                    <option value="">Tipo de Torneio</option>
+                    <% dados.tipoTorneios.forEach(tipoTorneio => { %>
+                        <option value="<%= tipoTorneio.id %>"><%= tipoTorneio.nome %></option>
+                    <% }) %>
+                </select><br>
+                
+                <div class="form-check">
+                    <input class="form-check-input" checked="true" type="checkbox" name="habilitaTorneio">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      Torneio Habilitado
+                    </label>
+                </div> <br>
+
+                <button class="btn btn-success">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>
+<%- include('../partials/scripts.ejs') %>

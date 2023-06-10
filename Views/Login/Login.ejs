@@ -1,0 +1,20 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbarLogin.ejs') %>
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Login</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" action="/authenticate">
+                <input class="form-control" type="text" required name="email" placeholder="login@email.com"><br> 
+                <input class="form-control" type="password" required name="password" placeholder="Senha"><br> 
+                
+                <button class="btn btn-success btm-block">Login</button>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>
+<%- include('../partials/scripts.ejs') %>

@@ -1,0 +1,31 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs') %>
+<div class="container">
+    <h2>Rankings</h2>
+    <a href="/rankings/new" class="btn btn-success">Inserir Ranking</a>
+    <hr>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Tipo Torneio</th>
+                <th>Data Início</th>
+                <th>Data Final</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% rankings.forEach(ranking => { %>
+                <tr>
+                    <td><%= ranking.nome %></td>
+                    <td><%= ranking.TipoTorneioNome %></td>
+                    <td><%= ranking.dtInicio %></td>
+                    <td><%= ranking.dtFinal %></td>
+                    <td>
+                        <a href="/rankings/view/<%= ranking.id %> " class="btn btn-success ">Ver Ranking</a>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+<%- include('../partials/footer.ejs') %>

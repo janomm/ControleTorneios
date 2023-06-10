@@ -1,0 +1,52 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs') %>
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Editar Torneio</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" action="/torneios/update">
+                <input class="form-control" type="hidden" required name="id" value="<%= dados.torneio.id %>"><br> 
+                <input class="form-control" type="text" required name="nome" placeholder="Nome" value="<%= dados.torneio.nome %>"><br> 
+                <input class="form-control" type="date" required name="data" placeholder="Data Torneio" value="<%= dados.torneio.data %>"><br> 
+                
+                <select class="form-control" name="idFormato">
+                    <option value="">Formato</option>
+                    <% dados.formatos.forEach(formato => { %>
+                        <option value="<%= formato.id %>"
+                            <% if(formato.id == dados.torneio.idFormato) {%>
+                            selected
+                            <%} %>
+
+                            ><%= formato.nome %></option>
+                    <% }) %>
+                </select><br>
+
+                <select class="form-control" name="idTipoTorneio">
+                    <option value="">Tipo de Torneio</option>
+                    <% dados.tipoTorneio.forEach(tipoTorneio => { %>
+                        <option value="<%= tipoTorneio.id %>"
+                            <% if(tipoTorneio.id == dados.torneio.idTipoTorneio) {%>
+                            selected
+                            <%} %>
+
+                            ><%= tipoTorneio.nome %></option>
+                    <% }) %>
+                </select><br>
+
+                <div class="form-check">
+                    <input class="form-check-input" checked="<%= dados.torneio.habilitaTorneio %>" type="checkbox" name="habilitaTorneio">
+                    <label class="form-check-label" for="flexCheckDefault">
+                      Torneio Habilitado
+                    </label>
+                </div> <br>
+
+                <button class="btn btn-success">Atualizar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>
+<%- include('../partials/scripts.ejs') %>

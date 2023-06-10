@@ -1,0 +1,53 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs') %>
+<div class="container">
+    <h2>Torneios</h2>
+    <a href="/torneios/new" class="btn btn-success">Inserir Torneio</a>
+    <hr>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Data</th>
+                <th>Formato</th>
+                <th>Tipo Torneio</th>
+                <th>Finalizado</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% torneios.forEach(torneio => { %>
+                <tr>
+                    <td><%= torneio.nome %></td>
+                    <td><%= torneio.data %></td>
+                    <td><%= torneio.FormatoNome %></td>
+                    <td><%= torneio.TipoTorneioNome %></td>
+                    <td><%= torneio.habilitaTorneio %></td>
+                    <td>
+                        <% if(torneio.habilitaTorneio == "Habilitado") {%>
+                            <a href="/torneios/edit/<%= torneio.id %> " class="btn btn-warning">Editar</a>
+                        <%} else {%>
+                            <a href="/torneios/enable/<%= torneio.id %> " class="btn btn-success">Habilitar</a>
+                        <%}%>
+                        <form method="post" action="/torneios/delete" style="display: inline"
+                            onsubmit="confirmDelete(event,this);">
+                            <input type="hidden" name="id" value="<%= torneio.id %>">
+                            <button class="btn btn-danger">Deletar</button>
+                        </form>
+                        <a class="btn btn-success" href="/torneios/inscritos/<%= torneio.id %>">Inscritos</a>
+                    
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+<%- include('../partials/footer.ejs') %>
+<script>
+    function confirmDelete(event, form){
+        event.preventDefault();
+        var decision = confirm("Você quer deletar este torneio?");
+        if(decision){
+            form.submit();
+        }
+    }
+    </script>
