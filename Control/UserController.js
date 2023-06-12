@@ -2,6 +2,7 @@ var User = require("../Model/User");
 var PasswordToken = require("../Model/PasswordToken");
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
+const Jogador = require("../Model/Jogador");
 //const session = require('express-session');
 
 var secret = "9793719213212002348208402934u029343454";
@@ -28,24 +29,56 @@ class UserController{
                 //Validar Senha
                 var correct = bcrypt.compareSync(password,user.password)
                 if(correct){
-                    req.session.user = user;
+                    if(user.role == 0){
+                        req.session.user = user;
+                        res.redirect("/home");
+                    } else {
+                        req.session.root = user;
+                        res.redirect('/');
+                    }
+                    
                 }
                 //console.log(req.session.user)
-                res.redirect("/home")
+                
 
-            } else {
-                if(email == 'root' && password == 'Teste123'){
-                    req.session.root = "root";
-                    res.redirect('/');
-                } else {
-                    res.redirect('/login');
-                }
             }
         } catch(e){
             console.log(e);
             return undefined;
         }
     }
+
+    /*async Auth(req,res){
+        var {email,password} = req.body;
+        
+        try{
+            var user = await User.findByEmail(email);
+            if(user != undefined){
+                //Validar Senha
+                var correct = bcrypt.compareSync(password,user.password)
+                if(correct){
+                    if(user.role == 1){
+                        req.session.root = user;
+                    } else {
+                        req.session.user = user;
+                    }
+                    res.redirect("/home");
+                }               
+
+            / *} else {
+                if(email == 'root' && password == 'Teste123'){
+                    req.session.root = "root";
+                    res.redirect('/');
+                } else {
+                    res.redirect('/login');
+                } * /
+            }
+            res.redirect('/login');
+        } catch(e){
+            console.log(e);
+            return undefined;
+        }
+    }*/
     
     async findUser(req,res){
         var id = req.params.id;
@@ -175,7 +208,25 @@ class UserController{
             res.json({status:false, err: "Usuário não encontrado!"})
             // res.send("Usuário inválido");
         }
+    }
 
+    async NewJogador(req,res){
+        var {nome,email,nick,dtNascimento,password,password2} = req.body;
+        //Inserir Validações
+        try{
+            if(await Jogador.Create(nome,email,nick,dtNascimento)){
+                if(await User.new(email,password,nome)){
+                    res.redirect("/login");
+                }
+            }
+            res.redirect("/logout");
+        } catch(e){
+            console.log(e);
+            res.redirect("/logout");
+        }
+
+
+        //res.render('./Jogador/LoginJogadorNew')
     }
 }
 

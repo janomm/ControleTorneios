@@ -9,6 +9,8 @@ const FormatoController = require("../Control/FormatoController");
 const UserController = require('../Control/UserController');
 const PlayerController = require("../Control/PlayerController");
 const RankingController = require('../Control/RankingController');
+const ArquetipoController = require("../Control/ArquetipoController");
+const DeckController = require('../Control/DeckController');
 
 const Auth = require('../Middleware/Auth');
 const Root = require('../Middleware/Root');
@@ -19,8 +21,10 @@ router.get("/",(req,res) => {
 });
 
 //Login
-router.get("/login",UserController.Index); 
-router.post("/authenticate",UserController.Auth)
+router.get('/NewJogador',JogadorController.NewJogador);
+router.post('/jogadores/newSave',UserController.NewJogador);
+router.get("/login",UserController.Index);
+router.post("/authenticate",UserController.Auth);
 router.get('/logout',UserController.Logout);
 
 //Jogador
@@ -58,9 +62,22 @@ router.get("/formatos/new",Root,FormatoController.New);
 router.post("/formatos/save",Root,FormatoController.Save);
 router.post("/formatos/delete",Root,FormatoController.Delete);
 
+//Arquétipos
+router.get("/arquetipos",Root,ArquetipoController.Index); 
+router.get("/arquetipos/new",Root,ArquetipoController.New);
+router.post("/arquetipos/save",Root,ArquetipoController.Save);
+router.post("/arquetipos/delete",Root,ArquetipoController.Delete);
+
+//Rankin
+router.get('/rankings',Root,RankingController.Index);
+router.get('/rankings/new',Root,RankingController.New);
+router.get('/rankings/view/:id',Root,RankingController.View);
+router.get('/rankings/save',Root,RankingController.Save);
+router.post('/rankings/delete',Root,RankingController.Delete);
+
 // Rotas autenticadas
 
-//Player
+//Players
 router.get("/perfil",Auth,PlayerController.Perfil);
 router.get("/home",Auth,PlayerController.Home);
 router.get("/torneios/detalhe/:id",Auth,TorneioController.Detalhe);
@@ -69,11 +86,13 @@ router.get("/torneios/cancelar/:id",Auth,PlayerController.Cancelar);
 router.get("/torneios/old",Auth,PlayerController.Anteriores);
 router.get("/torneios/classificacao/:id",Auth,PlayerController.Classificacao);
 
-//Rankin
-router.get('/rankings',Root,RankingController.Index);
-router.get('/rankings/new',Root,RankingController.New);
-router.get('/rankings/view/:id',Root,RankingController.View);
-router.get('/rankings/save',Root,RankingController.Save);
-router.post('/rankings/delete',Root,RankingController.Delete);
+//Decks
+router.get('/decks',Auth,DeckController.Index);
+router.get('/decks/new',Auth,DeckController.New);
+router.get("/decks/edit/:id",Auth,DeckController.Edit);
+router.post('/decks/save',Auth,DeckController.Save);
+router.post("/decks/delete",Auth,DeckController.Delete);
+router.post("/decks/update",Auth,DeckController.Update);
+
 
 module.exports = router;

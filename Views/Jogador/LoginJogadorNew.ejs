@@ -1,0 +1,31 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbarLogin.ejs') %>
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Novo Jogador</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" action="/jogadores/newSave">
+                <input class="form-control" type="text" required name="nome" placeholder="Nome"><br> 
+                <input class="form-control" type="email" required name="email" placeholder="E-mail"><br> 
+                <input class="form-control" type="text" required name="nick" placeholder="Nick"><br> 
+                <input class="form-control" type="date" required name="dtNascimento" placeholder="Data de Nascimento"><br> 
+                <input class="form-control" type="password" required name="password" placeholder="Senha"><br> 
+                <input class="form-control" type="password" required name="password2" placeholder="Repetir Senha"><br> 
+                <button class="btn btn-success">Cadastrar</button> <a href="/login" class="btn btn-success">Voltar</a>
+                <!--% erros.forEach(e =>{ % >
+                    < % if(e.msg != "") {% >
+                        <div class="alert alert-danger">"< % = e.msg % >"</div>
+                    < %} % >
+                < %}) % -->
+                <!--a class="btn btn-success">Cadastrar</a-->
+                <!--div class="alert alert-danger" id="div1"></div-->
+            </form>
+
+            
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>

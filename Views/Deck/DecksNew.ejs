@@ -1,0 +1,32 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbarUser.ejs') %>
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Novo Deck</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" action="/decks/save">
+                <input class="form-control" type="text" required name="nome" placeholder="Nome"><br> 
+                
+                <select class="form-control" name="idArquetipo" required>
+                    <option value="">Arquétipo</option>
+                    <% dados.arquetipos.forEach(arquetipo => { %>
+                        <option value="<%= arquetipo.id %>"><%= arquetipo.nome %></option>
+                    <% }) %>
+                </select><br>
+
+                <select class="form-control" name="idFormato" required>
+                    <option value="">Formato</option>
+                    <% dados.formatos.forEach(formato => { %>
+                        <option value="<%= formato.id %>"><%= formato.nome %></option>
+                    <% }) %>
+                </select><br>
+
+                <button class="btn btn-success">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>

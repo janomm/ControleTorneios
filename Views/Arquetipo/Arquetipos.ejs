@@ -1,0 +1,38 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs') %>
+<div class="container">
+    <h2>Arquétipos</h2>
+    <a href="/arquetipos/new" class="btn btn-success">Inserir Arquétipo</a>
+    <hr>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nome</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% arquetipos.forEach(arquetipo => { %>
+                <tr>
+                    <td><%= arquetipo.nome %></td>
+                    <td>
+                        <form method="post" action="/arquetipos/delete" style="display: inline"
+                            onsubmit="confirmDelete(event,this);">
+                            <input type="hidden" name="id" value="<%= arquetipo.id %>">
+                            <button class="btn btn-danger">Deletar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+<%- include('../partials/footer.ejs') %>
+<script>
+    function confirmDelete(event, form){
+        event.preventDefault();
+        var decision = confirm("Você quer deletar este arquétipo?");
+        if(decision){
+            form.submit();
+        }
+    }
+    </script>

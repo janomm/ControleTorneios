@@ -1,0 +1,43 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbarUser.ejs') %>
+<div class="container">
+    <h2>Decks</h2>
+    <a href="/decks/new" class="btn btn-success">Inserir Deck</a>
+    <hr>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Arquétipo</th>
+                <th>Formato</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% decks.forEach(deck => { %>
+                <tr>
+                    <td><%= deck.nome %></td>
+                    <td><%= deck.nomeArquetipo %></td>
+                    <td><%= deck.nomeFormato %></td>
+                    <td>
+                        <a href="/decks/edit/<%= deck.id %> " class="btn btn-warning">Editar</a>
+                        <form method="post" action="/decks/delete" style="display: inline" 
+                            onsubmit="confirmDelete(event,this);">
+                            <input type="hidden" name="id" value="<%= deck.id %>">
+                            <button class="btn btn-danger">Deletar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+<%- include('../partials/footer.ejs') %>
+<script>
+    function confirmDelete(event, form){
+        event.preventDefault();
+        var decision = confirm("Você quer deletar este deck?");
+        if(decision){
+            form.submit();
+        }
+    }
+    </script>

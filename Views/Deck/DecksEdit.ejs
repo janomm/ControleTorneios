@@ -1,0 +1,43 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbarUser.ejs') %>
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Editar Deck</h2>
+        </div>
+        <div class="card-body">
+            <form method="post" action="/decks/update">
+                <input class="form-control" type="hidden" required name="id" value="<%= dados.deck.id %>"><br>
+                <input class="form-control" type="text" required name="nome" placeholder="Nome" value="<%= dados.deck.nome %>"><br> 
+                
+                <select class="form-control" name="idArquetipo">
+                    <option value="">Arquétipos</option>
+                    <% dados.arquetipos.forEach(arquetipo => { %>
+                        <option value="<%= arquetipo.id %>"
+                            <% if(arquetipo.id == dados.deck.idArquetipo) {%>
+                            selected
+                            <%} %>
+
+                            ><%= arquetipo.nome %></option>
+                    <% }) %>
+                </select><br>
+
+                <select class="form-control" name="idFormato">
+                    <option value="">Formato</option>
+                    <% dados.formatos.forEach(formato => { %>
+                        <option value="<%= formato.id %>"
+                            <% if(formato.id == dados.deck.idFormato) {%>
+                            selected
+                            <%} %>
+
+                            ><%= formato.nome %></option>
+                    <% }) %>
+                </select><br>
+
+                <button class="btn btn-success">Atualizar</button>
+            </form>
+        </div>
+    </div>
+</div>
+<%- include('../partials/footer.ejs') %>
