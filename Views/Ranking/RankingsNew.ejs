@@ -7,23 +7,66 @@
             <h2>Novo Ranking</h2>
         </div>
         <div class="card-body">
-            <form method="post" action="/rankings/save">
-                <input class="form-control" type="text" required name="nome" placeholder="Nome"><br> 
+            <form method="post"  action="/rankings/save" onsubmit="return validate(event,this)">
+                <input class="form-control" type="text" id="nome" required name="nome" placeholder="Nome"><br> 
 
-                <select class="form-control" name="idTipoTorneio" required>
+                <select class="form-control" name="idTipoTorneio" id="idTipoTorneio" required>
                     <option value="">Tipo de Torneio</option>
                     <% tipoTorneios.forEach(tipoTorneio => { %>
                         <option value="<%= tipoTorneio.id %>"><%= tipoTorneio.nome %></option>
                     <% }) %>
                 </select><br>
 
-                <input class="form-control" type="date" required name="dtInicio" placeholder="Data Início"><br>
-                <input class="form-control" type="date" required name="dtFinal" placeholder="Data Final"><br> 
+                <input class="form-control" type="date" required name="dtInicio" id="dtInicio" placeholder="Data Início"><br>
+                <input class="form-control" type="date" required name="dtFinal" id="dtFinal" placeholder="Data Final"><br> 
 
                 <button class="btn btn-success">Cadastrar</button>
             </form>
+
+            <br>
+
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert" style='display:none'>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>
 <%- include('../partials/footer.ejs') %>
-<%- include('../partials/scripts.ejs') %>
+<script>
+
+    async function validate(event,form){
+        event.preventDefault();
+
+        var nome = document.getElementById("nome").value;
+        var idTipoTorneio = document.getElementById("idTipoTorneio").value;
+        var dtInicio = document.getElementById("dtInicio").value;
+        var dtFinal = document.getElementById("dtFinal").value;
+
+        var url = 'http://localhost:3000/ValidateInsertEdit';
+        try{
+            var err = await axios({
+                method: "post",
+                url: url,
+                data: {
+                    idTipoTorneio:idTipoTorneio,
+                    nome:nome,
+                    dtInicio:dtInicio,
+                    dtFinal:dtFinal
+                }
+            });
+            
+            if(err.data.err != undefined){
+                document.getElementById('alert').style = 'display:';
+                document.getElementById('alert').innerHTML = err.data.err;
+            } else {
+                document.getElementById('alert').style = 'display:none';
+                form.submit()
+            }
+        } catch(e){
+            console.log(e);
+        }
+    }
+
+</script>

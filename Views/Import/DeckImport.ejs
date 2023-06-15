@@ -1,0 +1,23 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbarUser.ejs') %>
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Importar Deck</h2>
+        </div>
+    </div>
+    <hr>
+    <div class="card">
+        <div class="card-body">
+            <form action="/import/deck" method="post" enctype="multipart/form-data">
+                <input type="file" name="files" class="btn btn-primary" id="file" multiple>
+                <button class="btn btn-primary" type="submit" style="border-radius: 4px;">Upload</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include('../partials/footer.ejs') %>
+
+

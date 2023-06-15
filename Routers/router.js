@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
-//const session = require('express-session');
 const router = express.Router();
+
 const TipoTorneioController = require("../Control/TipoTorneioController");
 const JogadorController = require("../Control/JogadorController");
 const TorneioController = require("../Control/TorneioController");
@@ -11,6 +11,7 @@ const PlayerController = require("../Control/PlayerController");
 const RankingController = require('../Control/RankingController');
 const ArquetipoController = require("../Control/ArquetipoController");
 const DeckController = require('../Control/DeckController');
+const DeckImportController = require("../Control/DeckImportController");
 
 const Auth = require('../Middleware/Auth');
 const Root = require('../Middleware/Root');
@@ -72,7 +73,7 @@ router.post("/arquetipos/delete",Root,ArquetipoController.Delete);
 router.get('/rankings',Root,RankingController.Index);
 router.get('/rankings/new',Root,RankingController.New);
 router.get('/rankings/view/:id',Root,RankingController.View);
-router.get('/rankings/save',Root,RankingController.Save);
+router.post('/rankings/save',Root,RankingController.Save);
 router.post('/rankings/delete',Root,RankingController.Delete);
 
 // Rotas autenticadas
@@ -93,6 +94,9 @@ router.get("/decks/edit/:id",Auth,DeckController.Edit);
 router.post('/decks/save',Auth,DeckController.Save);
 router.post("/decks/delete",Auth,DeckController.Delete);
 router.post("/decks/update",Auth,DeckController.Update);
+
+router.get("/importDeck",Auth,DeckImportController.Index);
+router.post("/import/deck",Auth,DeckImportController.Upload);
 
 
 module.exports = router;
