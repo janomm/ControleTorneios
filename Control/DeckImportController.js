@@ -13,6 +13,21 @@ const DeckImport = require('../Import/DeckImport');
 
 class DeckImportController{
     async Index(req,res){
+
+        /*var diretorio = '/UploadFiles';
+        try{
+            fs.unlink(diretorio + "/deck.csv",err => {
+                if(err){
+                    console.log("Deu erro ",err)
+                } else {
+                    console.log("Deletado");
+                }
+            });
+        } catch(e){
+            console.log(e);
+            res.redirect("/home");
+        }*/
+
         res.render("./Import/DeckImport");
     }
 
@@ -28,37 +43,26 @@ class DeckImportController{
 
         var validar = await  DeckImport.ValidaDados(dados.toString(),req.session.user.email); 
         
+        var importou;
         if (validar == ""){
             DeckImport.Import(dados.toString(),req.session.user.email);
-            res.end("Importou!!");
+            console.log("Importou!!");
+            importou = true;
         } else {
             console.log("Deu erro")
-            res.send({validar});
-
+            importou = false;
+            //res.send({validar});
         }
-        
-        /*fs.readdir('./UploadFiles',(err, files) => {
-            if(err){
-                console.log("Diretório não encontrado")
-                return;
+
+        var dados = 
+            {
+                importou: importou,
+                validar: validar
             }
 
-            /*files.forEach(file => {
-                console.log("--> " + file);
-            })* /
-        })
-
-        fs.unlink(diretorio + "/teste.csv",err => {
-            if(err){
-                console.log("Deu erro")
-            }
-            console.log("Deletado");
-        });*/
         
-
-        //res.end("Upload completed.");
+        res.render("./Import/ImportFinish",{dados});        
     }
-
 
     async ValidaArquivo(){
 

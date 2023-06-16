@@ -76,10 +76,14 @@ class Deck{
         return false;
     }
 
-    async FindByNome(idJogador,nome){
+    async FindDeck(idJogador,idArquetipo,nome,idFormato){
         try{
-            var decks = await knex.select(['id','idJogador','idArquetipo','nome','idFormato']).table("deck").where({idJogador:idJogador,nome:nome});
+            var where = {idJogador:idJogador,nome:nome,idArquetipo: idArquetipo,idFormato:idFormato};
+            //console.log("Params: " + where) 
+            var decks = await knex.select(['id','idJogador','idArquetipo','nome','idFormato']).table("deck")
+                .where(where);
 
+            //console.log("result: " + result);
             return decks;
             
         } catch(e){

@@ -14,39 +14,49 @@ class DeckImport{
 
         for(var x = 0; x < dados.split(",").length; x++){
             var linha = dados.split(",")[x];
-
+                
+            var {arquetipoObj,formatoObj,deckObj} = "" ;
+            
             var i = x + 1;
             var nome = linha.split(';')[0];
             var arquetipo = linha.split(';')[1];
             var formato = linha.split(';')[2];
 
-            if(nome == "" || nome == undefined){
-                var e = {erro:"Nome do deck não informado na linha " + i + "."};
-                result.push(e);
-            } else {
-                if(await Deck.FindByNome(jogador.id,nome) != ""){
-                    var e = {"erro":"Já existe um deck com o nome " + nome + " na linha " + i + "."};
-                    result.push(e);
-                }
-            }
             
             if(arquetipo == "" || arquetipo == undefined){
                 var e = {erro:"Arquétipo do deck não informado na linha " + i + "."};
                 result.push(e);
-            } else {
-                if(await Arquetipo.FindByNome(arquetipo) == ""){
-                    var e = {"erro":"Arquétipo informando não existe na linha " + i + "."};
-                    result.push(e);
-                }
             }
-    
+
             if(formato == "" || formato == undefined){
                 var e = {"erro":"Formato do deck não informado na linha " + i + "."};
                 result.push(e);
-            } else {
-                if(await Formato.FindByNome(formato) == ""){
+            }
+
+            if(nome == "" || nome == undefined){
+                var e = {erro:"Nome do deck não informado na linha " + i + "."};
+                result.push(e);
+            }
+
+            if(arquetipo != "" && formato != "" && nome != ""){
+                arquetipoObj = await Arquetipo.FindByNome(arquetipo);
+                if(arquetipoObj == undefined){
+                    var e = {"erro":"Arquétipo informando não existe na linha " + i + "."};
+                    result.push(e);
+                }
+
+                formatoObj = await Formato.FindByNome(formato);
+                if(formatoObj == undefined){
                     var e = {"erro":"Formato informando não existe na linha " + i + "."};
                     result.push(e);
+                }
+
+                if(arquetipoObj != undefined && formatoObj != undefined ){
+                    deckObj = await Deck.FindDeck(jogador.id,arquetipoObj.id,nome,formatoObj.id);
+                    if(deckObj != undefined){
+                        var e = {"erro":"Deck informado na linha " + i + " já cadastrado."};
+                        result.push(e);
+                    }
                 }
             }
         }
