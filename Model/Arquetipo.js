@@ -45,6 +45,17 @@ class Arquetipo{
         }
         return false;
     }
+
+    async FindByNome(nome){
+
+        try{
+            var arquetipo = await knex.select().table("arquetipo").where({nome:nome});
+            return arquetipo[0];
+        } catch(e){
+            console.log(e);
+            return undefined;
+        }
+    }
 }
 
 module.exports = new Arquetipo;

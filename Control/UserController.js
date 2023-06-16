@@ -34,13 +34,9 @@ class UserController{
                         res.redirect("/home");
                     } else {
                         req.session.root = user;
-                        res.redirect('/');
+                        res.render('index')
                     }
-                    
                 }
-                //console.log(req.session.user)
-                
-
             }
         } catch(e){
             console.log(e);

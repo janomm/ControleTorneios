@@ -23,5 +23,5 @@ app.use(session({
 app.use("/",router);
 
 app.listen(PORT,(req,res) => {
-    console.log("Executando na porta " + PORT );
+    console.log("Executando na porta " + PORT + " - " + new Date() );
 })

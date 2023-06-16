@@ -76,6 +76,19 @@ class Deck{
         return false;
     }
 
+    async FindByNome(idJogador,nome){
+        try{
+            var decks = await knex.select(['id','idJogador','idArquetipo','nome','idFormato']).table("deck").where({idJogador:idJogador,nome:nome});
+
+            return decks;
+            
+        } catch(e){
+            console.log(e);
+            return undefined;
+        }
+    }
+
+
 }
 
 module.exports = new Deck

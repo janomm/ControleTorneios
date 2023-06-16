@@ -46,6 +46,16 @@ class Formato{
         }
         return false;
     }
+
+    async FindByNome(nome){
+        try{
+            var formato = await knex.select().table("formato").where({nome:nome});
+            return formato[0];
+        } catch(e){
+            console.log(e);
+            return undefined;
+        }
+    }
 }
 
 module.exports = new Formato;

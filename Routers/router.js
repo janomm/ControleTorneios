@@ -18,7 +18,7 @@ const Root = require('../Middleware/Root');
 
 
 router.get("/",(req,res) => {
-    res.render('index');
+    res.render('./Login/Login');
 });
 
 //Login
