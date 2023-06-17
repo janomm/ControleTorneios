@@ -19,13 +19,17 @@
                 </thead>
                 <tbody>
                     <% dados.torneios.forEach(torneio => { %>
+                        <% if(torneio.fase == 2) {%>
+                        
                         <tr>
-                            <td><a class="nav-link" href="/torneios/detalhe/<%= torneio.id %>"><%= torneio.nome %></a></td>
+                            <td><%= torneio.nome %></a></td>
                             <td><%= torneio.data %></td>
                             <td><%= torneio.FormatoNome %></td>
                             <td><%= torneio.TipoTorneioNome %></td>
+                            <td><a class="btn btn-success" href="/torneios/detalhe/<%= torneio.id %>">Inscrição</a></td>
                         </tr>
-                    <% }) %>
+                        
+                    <% } }) %>
                 </tbody>
             </table>
         </div>

@@ -19,7 +19,6 @@ class JogadorController{
         res.render("./Jogador/LoginJogadorNew");
     }
 
-
     async Save(req,res){
         var {nome,email,nick,dtNascimento} = req.body;
         try{

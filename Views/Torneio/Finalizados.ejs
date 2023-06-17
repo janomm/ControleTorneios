@@ -20,6 +20,7 @@
                 </thead>
                 <tbody>
                     <% dados.torneios.forEach(torneio => { %>
+                        <% if(torneio.fase == 5 ) {%>
                         <tr>
                             <!--td><a class="nav-link" href="/torneios/detalhe/< % =  torneio.id % >">< % = torneio.nome % ></a></td-->
                             <td><a class="nav-link" href="/"><%= torneio.nome %></a></td>
@@ -30,7 +31,7 @@
                             <td><%= torneio.pontos %></td>
                             <td><a href="/torneios/classificacao/<%= torneio.id %> " class="btn btn-warning">Classificação Geral</a></td>
                         </tr>
-                    <% }) %>
+                    <% } }) %>
                 </tbody>
             </table>
         </div>

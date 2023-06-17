@@ -44,7 +44,23 @@ class Deck{
             console.log(e);
             return undefined;
         }
+    }
 
+    async FindAllByFormato(idJogador,idFormato){
+        try{
+            var decks = await knex.select(['deck.*','jogador.nome as nomeJogador',
+                    'arquetipo.nome as nomeArquetipo','formato.nome as nomeFormato'])
+                .table("deck")
+                .innerJoin("jogador","jogador.id","deck.idJogador")
+                .innerJoin("arquetipo","arquetipo.id","deck.idArquetipo")
+                .innerJoin("formato","formato.id","deck.idFormato")
+                .whereRaw('deck.idJogador = ' + idJogador + ' and deck.idFormato = ' + idFormato);
+
+            return decks;
+        } catch(e){
+            console.log(e);
+            return undefined;
+        }
     }
 
     async Delete(id){

@@ -59,9 +59,11 @@ class Ranking{
 
     async FindRankingCompleto(id){
         try{
-            var result = await knex.select(['jogador.nome',knex.raw('sum(jogadortorneio.pontos) as pontos')]).table('ranking')
+            var result = await knex.select(['jogador.nome',knex.raw('sum(jogadortorneio.pontos) as pontos'),'formato.nome as nomeFormato'])
+                .table('ranking')
                 .innerJoin('tipotorneio','tipotorneio.id','ranking.idTipoTorneio')
                 .innerJoin('torneio','tipotorneio.id','torneio.idTipoTorneio')
+                //.innerJoin('formato','formato.id','torneio.idFormato')
                 .innerJoin('jogadortorneio','torneio.id','jogadortorneio.idTorneio')
                 .innerJoin('jogador','jogadortorneio.idJogador','jogador.id')
                 .groupBy('jogador.nome').orderBy('pontos','desc')

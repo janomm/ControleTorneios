@@ -1,0 +1,53 @@
+<%- include('../partials/header.ejs') %>
+<%- include('../partials/navbar.ejs') %>
+<div class="container">
+    <hr>
+    <h2>Torneio <%= dados.torneio.nome %></h2>
+    <!--a href="/torneios/new" class="btn btn-success">Inserir Torneio</a-->
+    <hr>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Anterior</th>
+                <th>Atual</th>
+                <th>Próximo</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    <% if(dados.torneio.fase > 0) { %>
+                        <a href="/torneios/editFase/<%= dados.torneio.fase - 1 %>&<%= dados.torneio.id %>" class="btn btn-danger">
+                            << <%= dados.lst[dados.torneio.fase - 1] %>
+                        </a>
+                    <% } else { %>
+                        -
+                    <% } %>
+                </td>
+
+                <td><strong><%= dados.lst[dados.torneio.fase] %></strong></td>
+                <td>
+                    <% if(dados.torneio.fase < 5) { %>
+                        <a href="/torneios/editFase/<%= dados.torneio.fase + 1 %>&<%= dados.torneio.id %>" class="btn btn-success">
+                            <%= dados.lst[dados.torneio.fase + 1] %> >>
+                        </a>
+                    <% } else { %>
+                        -
+                    <% } %>
+                </td>
+                
+            </tr>
+            <!--tr>
+                <td></td>
+                <td><a href="/torneios" class="btn btn-warning">Torneios</a></td>
+                <td></td>
+            </tr-->
+            
+        </tbody>
+
+    </table>
+    
+    
+</div>
+<%- include('../partials/footer.ejs') %>

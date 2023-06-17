@@ -1,11 +1,21 @@
 const knex = require("../Database/connection");
 const FormataData = require("../Factory/FormataData");
 
+/*const lstFases = [
+                    { id: 0, desc: "Cancelado" },
+                    { id: 1, desc: "Criação" },
+                    { id: 2, desc: "Divulgação" },
+                    { id: 3, desc: "Inscrição Interna" },
+                    { id: 4, desc: "Inserir Resultados" },
+                    { id: 5, desc: "Final" }
+                ]; */
+//const lstFases = [ "Cancelado", "Criação", "Divulgação", "Inscrição Interna", "Inserir Resultados", "Final" ];
+
 class Torneio{
-    async Create(idTipoTorneio,idFormato,habilitaTorneio,nome,data){
+    async Create(idTipoTorneio,idFormato,nome,data){
         try{
             if(idTipoTorneio != undefined){
-                await knex.insert({idTipoTorneio,idFormato,habilitaTorneio,nome,data}).table('Torneio');
+                await knex.insert({idTipoTorneio,idFormato,nome,data}).table('Torneio');
                 return true;
             }
         } catch(e){
@@ -16,7 +26,8 @@ class Torneio{
 
     async FindById(id,fData){
         try{
-            var torneio = await knex.select(['torneio.*','TipoTorneio.nome as TipoTorneioNome','Formato.nome as FormatoNome'])
+            var torneio = await knex.select(['torneio.*','TipoTorneio.nome as TipoTorneioNome','Formato.nome as FormatoNome'
+                ,knex.raw("CASE WHEN torneio.fase = 1 THEN 'Criação' WHEN torneio.fase = 2 THEN 'Divulgação' WHEN torneio.fase = 3 THEN 'Inscrição Interna' WHEN torneio.fase = 4 THEN 'Inserir Resultados' WHEN torneio.fase = 5 THEN 'Final' ELSE 'Cancelado' END AS descFase")])
                 .table("Torneio")
                 .innerJoin("TipoTorneio","TipoTorneio.id","Torneio.idTipoTorneio")
                 .innerJoin("Formato","Formato.id","Torneio.idFormato")
@@ -28,7 +39,6 @@ class Torneio{
                 } else {
                     t.data = FormataData.Short(t.data);
                 }
-                if(t.habilitaTorneio == 1) {t.habilitaTorneio = true} else {t.habilitaTorneio = false}
             });
             return torneio[0];
         } catch(e){
@@ -37,24 +47,18 @@ class Torneio{
         }
     }
 
-    async FindTorneios(param){
-        var habilitaTorneio;
-        if(param == "A"){
-            habilitaTorneio = 1
-        } else {
-            habilitaTorneio = 0
-        }
-
+    async FindTorneios(){
         try{
-            var result = await knex.select(['torneio.*','TipoTorneio.nome as TipoTorneioNome','Formato.nome as FormatoNome'])
+            var result = await knex.select(['torneio.*','TipoTorneio.nome as TipoTorneioNome','Formato.nome as FormatoNome'
+                ,knex.raw("CASE WHEN torneio.fase = 1 THEN 'Criação' WHEN torneio.fase = 2 THEN 'Divulgação' WHEN torneio.fase = 3 THEN 'Inscrição Interna' WHEN torneio.fase = 4 THEN 'Inserir Resultados' WHEN torneio.fase = 5 THEN 'Final' ELSE 'Cancelado' END AS descFase")
+                ])
                 .table("Torneio")
                 .innerJoin("TipoTorneio","TipoTorneio.id","Torneio.idTipoTorneio")
                 .innerJoin("Formato","Formato.id","Torneio.idFormato")
-                .where('torneio.habilitaTorneio',habilitaTorneio);
+                //.where('torneio.fase',habilitaTorneio);
             
             result.forEach(function(torneio, i) {
                 torneio.data = FormataData.Long(torneio.data);
-                if(torneio.habilitaTorneio == 1) {torneio.habilitaTorneio = "Habilitado"} else {torneio.habilitaTorneio = "Finalizado"}
             });
             return result;
         } catch(e){
@@ -65,14 +69,15 @@ class Torneio{
 
     async FindAll(){
         try{
-            var result = await knex.select(['torneio.*','TipoTorneio.nome as TipoTorneioNome','Formato.nome as FormatoNome'])
+            var result = await knex.select(['torneio.*','TipoTorneio.nome as TipoTorneioNome','Formato.nome as FormatoNome'
+                ,knex.raw("CASE WHEN torneio.fase = 1 THEN 'Criação' WHEN torneio.fase = 2 THEN 'Divulgação' WHEN torneio.fase = 3 THEN 'Inscrição Interna' WHEN torneio.fase = 4 THEN 'Inserir Resultados' WHEN torneio.fase = 5 THEN 'Final' ELSE 'Cancelado' END AS descFase")
+                ])
                 .table("Torneio")
                 .innerJoin("TipoTorneio","TipoTorneio.id","Torneio.idTipoTorneio")
                 .innerJoin("Formato","Formato.id","Torneio.idFormato")
             
             result.forEach(function(torneio, i) {
                 torneio.data = FormataData.Long(torneio.data);
-                if(torneio.habilitaTorneio == 1) {torneio.habilitaTorneio = "Habilitado"} else {torneio.habilitaTorneio = "Finalizado"}
             });
             return result;
         } catch(e){
@@ -95,7 +100,7 @@ class Torneio{
         return false;
     }
 
-    async Enable(id){
+    /*async Enable(id){
         var habilitaTorneio = await this.FindById(id);
         if(habilitaTorneio != undefined){
             try{
@@ -116,17 +121,15 @@ class Torneio{
             }
         }
         return false;
-    }
+    }*/
 
-    async Update(id,idTipoTorneio,idFormato,habilitaTorneio,nome,data){
+    async Update(id,idTipoTorneio,idFormato,nome,data,fase){
         var torneio = this.FindById(id);
         if(nome.trim().length == 0){
             return false;
         }        
 
-        if(habilitaTorneio == undefined) {habilitaTorneio = 0} else {habilitaTorneio = 1}
-        
-        var editTorneio = {idTipoTorneio,idFormato,habilitaTorneio,nome,data};
+        var editTorneio = {idTipoTorneio,idFormato,nome,data,fase};
         if (torneio != undefined){
             try{
                 await knex.update(editTorneio).table('Torneio').where({id:id});

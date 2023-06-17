@@ -11,7 +11,7 @@
                 <th>Data</th>
                 <th>Formato</th>
                 <th>Tipo Torneio</th>
-                <th>Finalizado</th>
+                <th>Fase</th>
             </tr>
         </thead>
         <tbody>
@@ -21,20 +21,26 @@
                     <td><%= torneio.data %></td>
                     <td><%= torneio.FormatoNome %></td>
                     <td><%= torneio.TipoTorneioNome %></td>
-                    <td><%= torneio.habilitaTorneio %></td>
+                    <th><%= torneio.descFase %></th>
                     <td>
-                        <% if(torneio.habilitaTorneio == "Habilitado") {%>
+
+                        <a class="btn btn-primary" href="/torneios/fase/<%= torneio.id %>">Alterar Fase</a>
+                        <!--a href="/torneios/enable/< % = torneio.id % > " class="btn btn-success">Habilitar</a-->
+                        
+                        <% if(torneio.fase == 1) { %>
                             <a href="/torneios/edit/<%= torneio.id %> " class="btn btn-warning">Editar</a>
-                        <%} else {%>
-                            <a href="/torneios/enable/<%= torneio.id %> " class="btn btn-success">Habilitar</a>
-                        <%}%>
-                        <form method="post" action="/torneios/delete" style="display: inline"
-                            onsubmit="confirmDelete(event,this);">
-                            <input type="hidden" name="id" value="<%= torneio.id %>">
-                            <button class="btn btn-danger">Deletar</button>
-                        </form>
-                        <a class="btn btn-success" href="/torneios/inscritos/<%= torneio.id %>">Inscritos</a>
-                    
+                            <form method="post" action="/torneios/delete" style="display: inline"
+                                onsubmit="confirmDelete(event,this);">
+                                <input type="hidden" name="id" value="<%= torneio.id %>">
+                                <button class="btn btn-danger">Deletar</button>
+                            </form>
+                        <% } else { if(torneio.fase == 2 || torneio.fase == 3) { %>
+                            <strong><a class="btn btn-success" href="/torneios/inscritos/<%= torneio.id %>">Inscritos</a></strong>
+                        <% } else { if(torneio.fase == 4) { %>
+                            <strong><a class="btn btn-success" href="/torneios/resultados/<%= torneio.id %>">Inserir Resultado</a></strong>
+                        <% }  %>
+                        <% } } %>
+
                     </td>
                 </tr>
             <% }) %>

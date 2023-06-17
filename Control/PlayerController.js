@@ -6,12 +6,13 @@ const Torneio = require("../Model/Torneio");
 class PlayerController{
     async Home(req,res){
         var jogador = await Jogador.FindByEmail(req.session.user.email);
-        var torneios = await Torneio.FindTorneios("A");
+        var torneios = await Torneio.FindTorneios();
 
         var dados = {
             jogador: jogador,
             torneios: torneios
         }
+        console.log(torneios)
 
         if(jogador != undefined){
             res.render("./Usuario/Home",{dados});
@@ -33,10 +34,10 @@ class PlayerController{
     }
 
     async Inscrever(req,res){
-        var id = req.params.id;
+        var {id,idDeck} = req.body;
         var jogador = await Jogador.FindByEmail(req.session.user.email);
         try{
-            await JogadorTorneio.Create(id,jogador.id);
+            await JogadorTorneio.Create(id,jogador.id,idDeck);
             res.redirect('/torneios/detalhe/' + id);
 
         } catch(e){
@@ -97,7 +98,8 @@ class PlayerController{
     async DeleteInscrito(req,res){
         var {idJogador,idTorneio} = req.body;
         try{
-            //await JogadorTorneio.Delete(idTorneio,idJogador);
+            var deletou = await JogadorTorneio.Delete(idTorneio,idJogador);
+            console.log("deletou? " + deletou)
             res.redirect('/torneios/inscritos/' + idTorneio);
 
         } catch(e){
@@ -115,7 +117,8 @@ class PlayerController{
             await JogadorTorneio.Update(idTorneio,idJogador[i],posicao[i],pontos[i]);
         }
 
-        res.redirect("/torneios/inscritos/"+idTorneio);
+        //res.redirect("/torneios/inscritos/"+idTorneio);
+        res.redirect("/torneios")
 
     }
 
