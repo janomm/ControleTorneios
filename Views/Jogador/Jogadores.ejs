@@ -21,12 +21,20 @@
                     <td><%= jogador.nick %></td>
                     <td><%= jogador.dtNascimento %></td>
                     <td>
-                        <a href="/jogadores/edit/<%= jogador.id %> " class="btn btn-warning">Editar</a>
-                        <form method="post" action="/jogadores/delete" style="display: inline"
+                        <!--a href="/jogadores/edit/< %= jogador.id %> " class="btn btn-warning">Editar</a-->
+                        
+                        <% if(jogador.status == 1){ %>
+                            <a href="/jogadores/enable/<%= jogador.id %>" class="btn btn-warning">Desabilitar</a>
+                        <%} else { %>
+                            <a href="/jogadores/enable/<%= jogador.id %>" class="btn btn-success">Habilitar</a>
+                        <%}%>
+                        
+                        <!--form method="post" action="/jogadores/delete" style="display: inline"
                             onsubmit="confirmDelete(event,this);">
                             <input type="hidden" name="id" value="<%= jogador.id %>">
                             <button class="btn btn-danger">Deletar</button>
-                        </form>
+                        </form-->
+                        
                     </td>
                 </tr>
             <% }) %>

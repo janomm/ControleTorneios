@@ -9,8 +9,8 @@
         <div class="card-body">
             <form method="post" action="/jogadores/update">
                 <input class="form-control" type="hidden" required name="id" value="<%= jogador.id %>"><br> 
-                <input class="form-control" type="text" required name="nome" placeholder="Nome" value="<%= jogador.nome %>"><br> 
-                <input class="form-control" type="email" required name="email" placeholder="E-mail" value="<%= jogador.email %>"><br> 
+                <input class="form-control" type="text" disabled readonly name="nome" placeholder="Nome" value="<%= jogador.nome %>"><br> 
+                <input class="form-control" type="email" disabled readonly required name="email" placeholder="E-mail" value="<%= jogador.email %>"><br> 
                 <input class="form-control" type="text" required name="nick" placeholder="Nick" value="<%= jogador.nick %>"><br> 
                 <input class="form-control" type="date" required name="dtNascimento" placeholder="Data de Nascimento" value="<%= jogador.dtNascimento %>"><br> 
 

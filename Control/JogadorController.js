@@ -1,4 +1,5 @@
 const Jogador = require("../Model/Jogador");
+const User = require("../Model/User");
 
 class JogadorController{
     async Index(req,res){
@@ -43,10 +44,13 @@ class JogadorController{
     }
 
     async Update(req,res){
-        var {id,nome,email,nick,dtNascimento} = req.body;
+        var {id,nick,dtNascimento} = req.body;
+
         try{
-            await Jogador.Update(id,nome,email,nick,dtNascimento);
-            res.redirect("/Jogadores");
+            var jogador = await Jogador.FindById(id);
+            
+            await Jogador.Update(id,jogador.nome,jogador.email,nick,dtNascimento);
+            res.redirect("/home");
         } catch(e){
             console.log(e);
             res.redirect("/logout");
@@ -54,10 +58,16 @@ class JogadorController{
     }
 
     async Delete(req,res){
-        var id = req.body.id;
-
+        //var id = req.body.id;
+        var id = req.params.id;
         try{
-            await Jogador.Delete(id);
+            var jogador = await Jogador.FindById(id);
+            
+            var deletaUser = await User.delete(jogador.email);
+            console.log("Deletou? " + deletaUser);
+            /*if(deletaUser){
+                await Jogador.Delete(id);
+            }*/
             var jogadores = await Jogador.FindAll();
             res.render('./Jogador/Jogadores',{jogadores});
         } catch(e){

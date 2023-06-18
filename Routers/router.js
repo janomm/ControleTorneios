@@ -32,9 +32,9 @@ router.get('/logout',UserController.Logout);
 router.get("/jogadores",Root,JogadorController.Index); 
 router.get("/jogadores/new",Root,JogadorController.New);
 router.get("/jogadores/edit/:id",Root,JogadorController.Edit);
-router.post("/jogadores/update",Root,JogadorController.Update);
+router.get("/jogadores/enable/:id",Root,JogadorController.Delete);
 router.post("/jogadores/save",Root,JogadorController.Save);
-router.post("/jogadores/delete",Root,JogadorController.Delete);
+//router.post("/jogadores/delete",Root,JogadorController.Delete);
 
 //Torneio
 router.get("/torneios",Root,TorneioController.Index); 
@@ -86,6 +86,7 @@ router.post('/rankings/delete',Root,RankingController.Delete);
 //Players
 router.get("/perfil",Auth,PlayerController.Perfil);
 router.get("/home",Auth,PlayerController.Home);
+router.post("/jogadores/update",Auth,JogadorController.Update);
 router.get("/torneios/detalhe/:id",Auth,TorneioController.Detalhe);
 //router.get("/torneios/inscrever/:id",Auth,PlayerController.Inscrever);
 router.post("/torneios/inscrever/",Auth,PlayerController.Inscrever);

@@ -25,6 +25,9 @@ class UserController{
         
         try{
             var user = await User.findByEmail(email);
+            if(user.status == 0){
+                res.redirect('/logout');
+            }
             if(user != undefined){
                 //Validar Senha
                 var correct = bcrypt.compareSync(password,user.password)
@@ -210,6 +213,7 @@ class UserController{
         var {nome,email,nick,dtNascimento,password,password2} = req.body;
         //Inserir Validações
         try{
+            console.log(nome,email,nick,dtNascimento,password,password2)
             if(await Jogador.Create(nome,email,nick,dtNascimento)){
                 if(await User.new(email,password,nome)){
                     res.redirect("/login");

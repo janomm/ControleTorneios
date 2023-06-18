@@ -41,7 +41,9 @@ class Jogador{
     
     async FindAll(){
         try{
-            var result = await knex.select(['id','nome','email','nick','dtNascimento']).table('Jogador');
+            var result =
+                await knex.select(['jogador.id','jogador.nome','jogador.email','jogador.nick','jogador.dtNascimento','user.status'])
+                    .table('Jogador').innerJoin('user','user.email','jogador.email');
             result.forEach(function(jogador, i) {
                 jogador.dtNascimento = FormataData.Long(jogador.dtNascimento);
             })
@@ -68,9 +70,6 @@ class Jogador{
 
     async Update(id,nome,email,nick,dtNascimento){
         var jogador = this.FindById(id);
-        if(nome.trim().length == 0){
-            return false;
-        }
         var editJogador = {nome,email,nick,dtNascimento};
         if (jogador != undefined){
             try{

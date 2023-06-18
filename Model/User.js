@@ -33,7 +33,7 @@ class User{
 
     async findAll(){
         try {
-            var result = await knex.select(['id','nome','email','role']).table("user");
+            var result = await knex.select(['id','nome','email','role','status']).table("user");
             return result;
         } catch(err){
             console.log(err);
@@ -43,7 +43,7 @@ class User{
 
     async findById(id){
         try {
-            var result = await knex.select(['id','nome','email','role']).table("user").where({id:id});
+            var result = await knex.select(['id','nome','email','role','status']).table("user").where({id:id});
             if(result.length > 0){
                 return result;
             } else {
@@ -58,7 +58,7 @@ class User{
 
     async findBynome(nome){
         try {
-            var result = await knex.select(['id','nome','email','role']).table("user").where({nome:nome});
+            var result = await knex.select(['id','nome','email','role','status']).table("user").where({nome:nome});
             return result;
         } catch(err){
             console.log(err);
@@ -68,7 +68,7 @@ class User{
 
     async findByEmail(email){
         try{
-            var result = await knex.select(["id","email","password","role","nome"]).where({email:email}).table("user");
+            var result = await knex.select(["id","email","password","role","nome","status"]).where({email:email}).table("user");
             
             if(result.length > 0){
                 return result[0];
@@ -116,20 +116,23 @@ class User{
 
     }
 
-    async delete(id){
-        var user = await this.findById(id);
-        if (user != undefined){
-            try{
-                await knex.delete().where({id:id}).table("user");
-                return {status:true};
-
-            } catch(err){
-                return {status:false,err:err};
+    async delete(email){
+        var user = await this.findByEmail(email);
+        try{
+            if(user.status == 0) {
+                user.status = 1;
+            } else {
+                user.status = 0;
             }
 
-        } else {
-            return {status:false,err:"O usuário não existe, não podendo ser excluído. "};
+            await knex.update(user).table("user").where({id:user.id});
+            return true;
+
+        } catch(err){
+            console.log(e);
+            return false;
         }
+
         
     }
 
