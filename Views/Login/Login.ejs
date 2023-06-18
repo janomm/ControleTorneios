@@ -9,16 +9,48 @@
         <div class="card-body">
             <div><h2>Login</h2><br></div>
             
-            <form method="post" action="/authenticate">
+            <form method="post" action="/authenticate" onsubmit="return validate(event,this)">
                 <input class="form-control" type="text" required name="email" placeholder="login@email.com"><br> 
                 <input class="form-control" type="password" required name="password" placeholder="Senha"><br> 
                 
                 <button class="btn btn-success btm-block">Login</button><br><br>
                 <a href="/NewJogador">Não tenho Cadastro</a>
             </form>
+            <br>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert" style='display:none'>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
             
         </div>
     </div>
 </div>
 <%- include('../partials/footer.ejs') %>
-<%- include('../partials/scripts.ejs') %>
+<script>
+    async function validate(event,form){
+        event.preventDefault();
+
+        var email = document.getElementsByName("email")[0].value
+        var password = document.getElementsByName("password")[0].value;
+
+        var url = 'http://localhost:3000/ValidateLogin';
+        
+        try{
+            var err = await axios.post(url,{email:email,password:password});
+
+            if(err.data.err != undefined){
+                document.getElementById('alert').style = 'display:';
+                document.getElementById('alert').innerHTML = err.data.err;
+                document.getElementsByName("email")[0].value = "";
+                document.getElementsByName("password")[0].value = "";
+
+            } else {
+                document.getElementById('alert').style = 'display:none';
+                form.submit();
+            }
+        } catch(e){
+            console.log(e);
+        }
+    }
+</script>
