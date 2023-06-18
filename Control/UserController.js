@@ -213,7 +213,7 @@ class UserController{
         var {nome,email,nick,dtNascimento,password,password2} = req.body;
         //Inserir Validações
         try{
-            console.log(nome,email,nick,dtNascimento,password,password2)
+            //console.log(nome,email,nick,dtNascimento,password,password2)
             if(await Jogador.Create(nome,email,nick,dtNascimento)){
                 if(await User.new(email,password,nome)){
                     res.redirect("/login");

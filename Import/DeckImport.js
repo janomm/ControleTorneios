@@ -53,7 +53,7 @@ class DeckImport{
 
                 if(arquetipoObj != undefined && formatoObj != undefined ){
                     deckObj = await Deck.FindDeck(jogador.id,arquetipoObj.id,nome,formatoObj.id);
-                    if(deckObj != undefined){
+                    if(deckObj != undefined && deckObj != ""){
                         var e = {"erro":"Deck informado na linha " + i + " já cadastrado."};
                         result.push(e);
                     }
