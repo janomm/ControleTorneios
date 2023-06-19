@@ -71,7 +71,7 @@ class JogadorTorenio{
     async findJogadorTorneioByidTorneio(idTorneio){
         try{
             var result = await knex.select(['jogadortorneio.posicao','jogadortorneio.pontos','torneio.nome as nomeTorneio',
-                'torneio.data','jogador.nome as nomeJogador','jogadortorneio.idJogador','torneio.fase'])
+                'torneio.data','jogador.nome as nomeJogador','jogadortorneio.idJogador','torneio.fase','jogadorTorneio.idDeck'])
                 .table('jogadortorneio')
                 .innerJoin('torneio','torneio.id','jogadortorneio.idTorneio')
                 .innerJoin('jogador','jogador.id','jogadortorneio.idJogador')
@@ -132,7 +132,7 @@ class JogadorTorenio{
     }
 
     async Update(idTorneio,idJogador,idDeck,posicao,pontos){
-        console.log()
+        //console.log()
 
         var editJogadorTorneio = {posicao,pontos,idDeck};
         try{

@@ -111,11 +111,15 @@ class PlayerController{
     }
 
     async AtualizaInscrito(req,res){
-        var {idTorneio,idJogador,posicao,pontos} = req.body;
+        var {idTorneio,idJogador,posicao,pontos,idDeck} = req.body;
+
+        console.log("1-> ",idTorneio,idJogador,posicao,pontos,idDeck);
+        //console.log("1.1-> " , pontos)
         
         for(var i=0;i < idJogador.length;i++){
             console.log(idTorneio,idJogador[i],posicao[i],pontos[i]);
-            await JogadorTorneio.Update(idTorneio,idJogador[i],posicao[i],pontos[i]);
+
+            await JogadorTorneio.Update(idTorneio,idJogador[i],idDeck[i],posicao[i],pontos[i]);
         }
 
         //res.redirect("/torneios/inscritos/"+idTorneio);

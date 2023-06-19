@@ -25,6 +25,7 @@
                                     <input type="text" class="form-control" name="posicao" value="<%= jogador.posicao %>"></td>
                                 <td><%= jogador.nomeJogador %></td>
                                 <td><input type="text" class="form-control" name="pontos" value="<%= jogador.pontos %>"></td>
+                                <input class="form-control" type="hidden" name="idDeck" value="<%=jogador.idDeck %>">
                             </tr>
                             <%})%>
                         <tr><td><button class="btn btn-success">Atualizar</button></td></tr>

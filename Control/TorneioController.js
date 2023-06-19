@@ -87,13 +87,15 @@ class TorneioController{
                 var p = players[i];
                 
                 var jogadorTorneio = await JogadorTorneio.FindJogadorInTorneio(id,p.id);
+                //console.log("jogadorTorneio: " + jogadorTorneio);
                 //console.log("Torneio: " + id + "; Jogador: " + p.id + "; JogadorTorneio: " + jogadorTorneio);
-                if(jogadorTorneio == ""){
+                if(jogadorTorneio == "" || jogadorTorneio == undefined){
                     var d = 
                         {
                             jogadores: p,
                             decks: await Deck.FindAllByFormato(p.id,torneio.idFormato)
                         }
+                        //console.log(d);
                     jogadores.push(d);
                 }
             }
@@ -288,7 +290,7 @@ class TorneioController{
         
         var jogadorTorneio = await JogadorTorneio.findJogadorTorneioByidTorneio(id)
         var torneio = await Torneio.FindById(id);
-        console.log("Torneio: " + torneio);
+        //console.log("Torneio: " + torneio);
 
         var dados = {
             jogadores: jogadorTorneio,
