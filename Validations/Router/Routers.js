@@ -6,6 +6,7 @@ const LoginValidate = require('../Validate/LoginValidate');
 const TipoTorneioValidate = require('../Validate/TipoTorneioValidate');
 const FormatoValidate = require('../Validate/FormatoValidate');
 const ArquetipoValidate = require('../Validate/ArquetipoValidate');
+const TorneioValidate = require('../Validate/TorneioValidate')
 
 router.get('/',(req,res)=>{
     res.send('inicio Rota');
@@ -18,6 +19,8 @@ router.post("/ValidaCriacaoUser",LoginValidate.ValidaCriacaoUser); // ../Jogador
 //Ranking
 router.post('/ValidateInsertEdit',RankingValidate.ValidateInsert); //../Raking/RankingsNew
 
+
+router.post('/ValidaInsercaoResultados',TorneioValidate.ValidaInsercaoResultados); //../Torneio/InserirResultados
 
 /***************************************************************************************************/
 

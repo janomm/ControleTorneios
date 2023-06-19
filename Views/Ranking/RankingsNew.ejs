@@ -31,7 +31,6 @@
             </form>
 
             <br>
-
             <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert" style='display:none'>
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
@@ -66,32 +65,6 @@
         } catch(e){
             console.log(e);
         }
-
-        /*try{
-            var err = await axios({
-                method: "post",
-                url: url,
-                data: {
-                    idTipoTorneio:idTipoTorneio,
-                    nome:nome,
-                    dtInicio:dtInicio,
-                    dtFinal:dtFinal,
-                    formato:formato
-                }
-            });
-            
-            if(err.data.err != undefined){
-                document.getElementById('alert').style = 'display:';
-                document.getElementById('alert').innerHTML = err.data.err;
-                event.preventDefault();
-
-            } else {
-                document.getElementById('alert').style = 'display:none';
-                form.submit()
-            }
-        } catch(e){
-            console.log(e);
-        }*/
     }
 
 </script>

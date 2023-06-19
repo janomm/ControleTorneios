@@ -17,7 +17,7 @@
                 </thead>
                 <tbody>
                     <% if(dados.torneio.fase == 4){ %>
-                        <form method="post" action="/torneios/inscrito/atualiza">
+                        <form method="post" action="/torneios/inscrito/atualiza" onsubmit="return validate(event,this)">
                             <input type="hidden" name="idTorneio" value="<%= dados.torneio.id %>">
                             <% dados.jogadores.forEach(jogador => { %>
                             <tr>
@@ -33,6 +33,12 @@
                     <%} %>
                 </tbody>
             </table>
+            <br>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert" style='display:none'>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>
@@ -45,4 +51,73 @@
             form.submit();
         }
     }
-    </script>
+
+    function validate(event,form){
+        event.preventDefault();
+        
+        var posicao = document.getElementsByName('posicao');
+
+        var lstPosicao = [];
+
+        for (var i = 0 ; i < posicao.length; i++){
+            lstPosicao.push(posicao[i].value);
+        }
+
+        const lstOrdenado = qs(lstPosicao);
+        var erro = false;
+        
+        for(var i = 0 ; i < lstOrdenado.length; i++){
+            if(i + 1 < lstOrdenado.length ){
+                if(lstOrdenado[i] == lstOrdenado[i+1]){
+                    erro = true;
+                }
+            }
+        }
+
+        if(erro){
+            document.getElementById('alert').style = 'display:';
+            document.getElementById('alert').innerHTML = "Posições erradas.";
+
+        } else {
+            document.getElementById('alert').style = 'display:none';
+            form.submit();
+        }
+    }
+
+    function qs(vet) {
+        quickSort(vet, 0, vet.length - 1);
+        return vet;
+    }
+
+    function quickSort(vet, ini, fim){
+        var i = ini;
+        var f = fim;
+        var m = Math.floor((i + f)/2);
+
+        while(i < f)
+        {
+            while(vet[i] < vet[m])
+                i++;
+
+            while(vet[f] > vet[m])
+                f--;
+
+            if(i <= f)
+            {
+                var temp = vet[i];
+                vet[i] = vet[f];
+                vet[f] = temp;
+                i++;
+                f--;
+            }
+        }
+
+        if(f > ini)
+            quickSort(vet, ini, f);
+
+        if(i < fim)
+            quickSort(vet, i, fim);
+    }
+
+
+</script>
