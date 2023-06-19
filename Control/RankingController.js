@@ -1,6 +1,7 @@
 const Ranking = require("../Model/Ranking");
 const TipoTorneio = require("../Model/TipoTorneio");
 const FormataData = require('../Factory/FormataData');
+const Formato = require("../Model/Formato");
 
 
 class RankingController{
@@ -15,14 +16,21 @@ class RankingController{
     }
 
     async New(req,res){
-        const tipoTorneios = await TipoTorneio.FindAll();        
-        res.render("./Ranking/RankingsNew",{tipoTorneios});
+        const tipoTorneios = await TipoTorneio.FindAll();
+        const formatos = await Formato.FindAll()
+        var dados = {
+            tipoTorneios: tipoTorneios,
+            formatos: formatos
+        }
+        console.log("Formato: ", formatos);
+        
+        res.render("./Ranking/RankingsNew",{dados});
     }
 
     async Save(req,res){
-        var {nome,idTipoTorneio,dtInicio,dtFinal} = req.body;
+        var {nome,idTipoTorneio,dtInicio,dtFinal,idFormato} = req.body;
         try{
-            await Ranking.Create(idTipoTorneio,nome,dtInicio,dtFinal);
+            await Ranking.Create(idTipoTorneio,nome,dtInicio,dtFinal,idFormato);
             res.redirect('/Rankings');
         } catch(e){
             console.log(e);
@@ -35,7 +43,6 @@ class RankingController{
         try{
             var ranking = await Ranking.FindById(id,true);
             var result  = await Ranking.FindRankingCompleto(id);
-            
             
             var dados = {
                 ranking: ranking,

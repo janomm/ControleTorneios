@@ -2,9 +2,9 @@ const Ranking = require('../Model/Ranking');
 
 class RankingValidate{
     async ValidateInsert(req,res){
-        var {idTipoTorneio,nome,dtInicio,dtFinal} = req.body;
+        var {idTipoTorneio,nome,dtInicio,dtFinal,idFormato} = req.body;
         
-        //console.log(idTipoTorneio,nome,dtInicio,dtFinal);
+        //console.log(idTipoTorneio,nome,dtInicio,dtFinal,idFormato);
 
         if(nome == undefined || nome.trim().length == 0){
             res.status(200);
@@ -33,6 +33,12 @@ class RankingValidate{
         if(idTipoTorneio == undefined || idTipoTorneio == 0 || idTipoTorneio.toString().trim().length == 0){
             res.status(200);
             res.json({err: "Tipo de Torneio deve ser informado."});
+            return
+        }
+
+        if(idFormato == undefined || idFormato == 0 || idFormato.toString().trim().length == 0){
+            res.status(200);
+            res.json({err: "Formato deve ser informado."});
             return
         }
 

@@ -12,8 +12,15 @@
 
                 <select class="form-control" name="idTipoTorneio" id="idTipoTorneio" required>
                     <option value="">Tipo de Torneio</option>
-                    <% tipoTorneios.forEach(tipoTorneio => { %>
+                    <% dados.tipoTorneios.forEach(tipoTorneio => { %>
                         <option value="<%= tipoTorneio.id %>"><%= tipoTorneio.nome %></option>
+                    <% }) %>
+                </select><br>
+
+                <select class="form-control" name="idFormato" id="idFormato" required>
+                    <option value="">Formato</option>
+                    <% dados.formatos.forEach(formato => { %>
+                        <option value="<%= formato.id %>"><%= formato.nome %></option>
                     <% }) %>
                 </select><br>
 
@@ -38,14 +45,29 @@
 
     async function validate(event,form){
         event.preventDefault();
-
         var nome = document.getElementById("nome").value;
         var idTipoTorneio = document.getElementById("idTipoTorneio").value;
         var dtInicio = document.getElementById("dtInicio").value;
         var dtFinal = document.getElementById("dtFinal").value;
+        var idFormato = document.getElementById("idFormato").value;
 
         var url = 'http://localhost:3000/ValidateInsertEdit';
         try{
+            var err = await axios.post(url,{idTipoTorneio:idTipoTorneio,nome:nome,dtInicio:dtInicio,dtFinal:dtFinal,idFormato:idFormato});
+
+            if(err.data.err != undefined){
+                document.getElementById('alert').style = 'display:';
+                document.getElementById('alert').innerHTML = err.data.err;
+
+            } else {
+                document.getElementById('alert').style = 'display:none';
+                form.submit();
+            }
+        } catch(e){
+            console.log(e);
+        }
+
+        /*try{
             var err = await axios({
                 method: "post",
                 url: url,
@@ -53,20 +75,23 @@
                     idTipoTorneio:idTipoTorneio,
                     nome:nome,
                     dtInicio:dtInicio,
-                    dtFinal:dtFinal
+                    dtFinal:dtFinal,
+                    formato:formato
                 }
             });
             
             if(err.data.err != undefined){
                 document.getElementById('alert').style = 'display:';
                 document.getElementById('alert').innerHTML = err.data.err;
+                event.preventDefault();
+
             } else {
                 document.getElementById('alert').style = 'display:none';
                 form.submit()
             }
         } catch(e){
             console.log(e);
-        }
+        }*/
     }
 
 </script>

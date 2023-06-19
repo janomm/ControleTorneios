@@ -12,7 +12,7 @@ class PlayerController{
             jogador: jogador,
             torneios: torneios
         }
-        console.log(torneios)
+        //console.log(torneios)
 
         if(jogador != undefined){
             res.render("./Usuario/Home",{dados});
@@ -48,6 +48,7 @@ class PlayerController{
 
     async Cancelar(req,res){
         var id = req.params.id;
+        console.log("Agora Foi")
         var jogador = await Jogador.FindByEmail(req.session.user.email);
         try{
             await JogadorTorneio.Delete(id,jogador.id);

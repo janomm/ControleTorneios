@@ -2,9 +2,9 @@ const knex = require('../Database/connection');
 const FormataData = require('../Factory/FormataData');
 
 class Ranking{
-    async Create(idTipoTorneio,nome,dtInicio,dtFinal){
+    async Create(idTipoTorneio,nome,dtInicio,dtFinal,idFormato){
         try{
-            await knex.insert({idTipoTorneio,nome,dtInicio,dtFinal}).table('ranking');
+            await knex.insert({idTipoTorneio,nome,dtInicio,dtFinal,idFormato}).table('ranking');
             return true;
         } catch(e){
             console.log(e);
@@ -14,9 +14,10 @@ class Ranking{
 
     async FindById(id,fData){
         try{
-            var result = await knex.select(['ranking.*','TipoTorneio.nome as TipoTorneioNome'])
+            var result = await knex.select(['ranking.*','TipoTorneio.nome as TipoTorneioNome','formato.nome as FormatoNome'])
                 .table("ranking")
                 .innerJoin("TipoTorneio","TipoTorneio.id","ranking.idTipoTorneio")
+                .innerJoin("formato","formato.id","ranking.idFormato")
                 .where('ranking.id',id);
 
             result.forEach(function(r, i) {
@@ -37,9 +38,10 @@ class Ranking{
 
     async FindAll(fData){
         try{
-            var result = await knex.select(['ranking.*','TipoTorneio.nome as TipoTorneioNome'])
+            var result = await knex.select(['ranking.*','TipoTorneio.nome as TipoTorneioNome','formato.nome as FormatoNome'])
                 .table("ranking")
                 .innerJoin("TipoTorneio","TipoTorneio.id","ranking.idTipoTorneio")
+                .innerJoin("formato","formato.id","ranking.idFormato")
                 
             result.forEach(function(r, i) {
                 if(fData) {
@@ -59,15 +61,14 @@ class Ranking{
 
     async FindRankingCompleto(id){
         try{
-            var result = await knex.select(['jogador.nome',knex.raw('sum(jogadortorneio.pontos) as pontos'),'formato.nome as nomeFormato'])
-                .table('ranking')
+            var result = await knex.select(['jogador.nome',knex.raw('sum(jogadortorneio.pontos) as pontos')]).table('ranking')
                 .innerJoin('tipotorneio','tipotorneio.id','ranking.idTipoTorneio')
                 .innerJoin('torneio','tipotorneio.id','torneio.idTipoTorneio')
-                //.innerJoin('formato','formato.id','torneio.idFormato')
                 .innerJoin('jogadortorneio','torneio.id','jogadortorneio.idTorneio')
                 .innerJoin('jogador','jogadortorneio.idJogador','jogador.id')
                 .groupBy('jogador.nome').orderBy('pontos','desc')
-                .whereRaw('ranking.id = ' + id + ' and torneio.habilitaTorneio = 0 and torneio.data >= ranking.dtInicio and torneio.data <= ranking.dtFinal');
+                .whereRaw('ranking.id = ' + id + ' and torneio.fase = 5 and torneio.data >= ranking.dtInicio and torneio.data <= ranking.dtFinal');
+
             
             return result;
         } catch(e){

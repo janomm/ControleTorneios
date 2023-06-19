@@ -123,6 +123,25 @@ class Torneio{
         return false;
     }*/
 
+    async Cancelar(id){
+        try{
+            var torneio = await this.FindById(id);
+            var editTorneio = {
+                id: torneio.id,
+                idTipoTorneio: torneio.idTipoTorneio,
+                idFormato: torneio.idFormato,
+                fase:0,
+                nome: torneio.nome,
+                data: torneio.data
+            }
+            await knex.update(editTorneio).table('Torneio').where({id:id});
+            return true;
+        } catch(e){
+            console.log(e);
+            return false;
+        }
+    }
+
     async Update(id,idTipoTorneio,idFormato,nome,data,fase){
         var torneio = this.FindById(id);
         if(nome.trim().length == 0){

@@ -24,22 +24,31 @@
                     <th><%= torneio.descFase %></th>
                     <td>
 
-                        <a class="btn btn-primary" href="/torneios/fase/<%= torneio.id %>">Alterar Fase</a>
-                        <!--a href="/torneios/enable/< % = torneio.id % > " class="btn btn-success">Habilitar</a-->
+                        <% if(torneio.fase > 0) { %>
+                            <a class="btn btn-primary" href="/torneios/fase/<%= torneio.id %>">Alterar Fase</a>
+                        <%}%>
                         
                         <% if(torneio.fase == 1) { %>
                             <a href="/torneios/edit/<%= torneio.id %> " class="btn btn-warning">Editar</a>
+                        <%}%>
+
+                        <% if(torneio.fase == 0 || torneio.fase == 1) { %>
                             <form method="post" action="/torneios/delete" style="display: inline"
                                 onsubmit="confirmDelete(event,this);">
                                 <input type="hidden" name="id" value="<%= torneio.id %>">
                                 <button class="btn btn-danger">Deletar</button>
                             </form>
-                        <% } else { if(torneio.fase == 2 || torneio.fase == 3) { %>
+                        <%}%>
+
+                        <% if(torneio.fase == 2 || torneio.fase == 3) { %>
                             <strong><a class="btn btn-success" href="/torneios/inscritos/<%= torneio.id %>">Inscritos</a></strong>
-                        <% } else { if(torneio.fase == 4) { %>
+                            <strong><a class="btn btn-danger" href="/torneios/cancelar/<%= torneio.id %>" onclick="confirmCancel(event,this)">Cancelar</a></strong>
+                        <% } %>
+
+                        <% if(torneio.fase == 4) { %>
                             <strong><a class="btn btn-success" href="/torneios/resultados/<%= torneio.id %>">Inserir Resultado</a></strong>
                         <% }  %>
-                        <% } } %>
+                        
 
                     </td>
                 </tr>
@@ -56,4 +65,13 @@
             form.submit();
         }
     }
-    </script>
+
+    function confirmCancel(event, teste){
+        var decision = confirm("Você quer cancelar este torneio?");
+        if(!decision){
+            event.preventDefault();
+        }
+        
+    }
+
+</script>

@@ -8,23 +8,21 @@
 
     <table class="table table-bordered">
         <thead>
-            <tr>
-                <th>Anterior</th>
-                <th>Atual</th>
-                <th>Próximo</th>
-            </tr>
+            <% if(dados.torneio.fase == 1 || dados.torneio.fase == 2 ){ %>
+                <tr><th>Atual</th> <th>Próximo</th> </tr>
+            <%} else { %>
+                <tr><th>Anterior</th> <th>Atual</th> <th>Próximo</th> </tr>
+            <%} %>
         </thead>
         <tbody>
             <tr>
-                <td>
-                    <% if(dados.torneio.fase > 0) { %>
+                <% if(dados.torneio.fase > 2) { %>
+                    <td>                    
                         <a href="/torneios/editFase/<%= dados.torneio.fase - 1 %>&<%= dados.torneio.id %>" class="btn btn-danger">
                             << <%= dados.lst[dados.torneio.fase - 1] %>
                         </a>
-                    <% } else { %>
-                        -
-                    <% } %>
-                </td>
+                    </td>
+                <% } %>
 
                 <td><strong><%= dados.lst[dados.torneio.fase] %></strong></td>
                 <td>
@@ -36,18 +34,8 @@
                         -
                     <% } %>
                 </td>
-                
             </tr>
-            <!--tr>
-                <td></td>
-                <td><a href="/torneios" class="btn btn-warning">Torneios</a></td>
-                <td></td>
-            </tr-->
-            
         </tbody>
-
     </table>
-    
-    
 </div>
 <%- include('../partials/footer.ejs') %>

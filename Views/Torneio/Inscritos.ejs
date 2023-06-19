@@ -16,12 +16,11 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% dados.jogadores.forEach(jogador => { %>
+                        <% dados.jogadores.forEach((jogador,index) => { %>
                             <tr>
                                 <td><%= jogador.jogador.nome %></td>
                                 <td>
-                                    <!---->
-                                    <select class="form-control" id="deck" name="idDeck">
+                                    <select class="form-control" id="deck" onchange="trocaDeck('<%= index %>','<%= dados.torneio.id %>','<%= jogador.jogador.idJogador %>')" name="idDeck">
                                         <option value="0">Selecione o Deck</option>
                                         <% jogador.decks.forEach(deck => { %>
                                             <option value="<%= deck.id %>"
@@ -31,9 +30,7 @@
                                                 ><%= deck.nome %></option>
                                         <% }) %>
                                     </select>
-                                    <!---->
                                 </td>
-                                <!-- Aqui validação -->
                                 <td>
                                     <form method="post" action="/torneios/inscrito/delete" style="display: inline"
                                         onsubmit="confirmDelete(event,this);">
@@ -59,5 +56,12 @@
         if(decision){
             form.submit();
         }
+    }
+
+    function trocaDeck(index,idTorneio,idJogador){
+        var deck = document.getElementsByName('idDeck')[index];
+        var params = idTorneio + ";" + idJogador + ";" + deck.value;
+        var url = "/torneios/trocarDeck/" + params;
+        window.location.href = url;
     }
 </script>

@@ -40,7 +40,8 @@ router.post("/jogadores/save",Root,JogadorController.Save);
 router.get("/torneios",Root,TorneioController.Index); 
 router.get("/torneios/new",Root,TorneioController.New);
 router.get("/torneios/edit/:id",Root,TorneioController.Edit);
-router.get('/torneios/enable/:id',Root,TorneioController.Enable);
+//router.get('/torneios/enable/:id',Root,TorneioController.Enable);
+router.get('/torneios/cancelar/:id',Root,TorneioController.Cancelar);
 router.post("/torneios/update",Root,TorneioController.Update);
 router.post("/torneios/save",Root,TorneioController.Save);
 router.post("/torneios/delete",Root,TorneioController.Delete);
@@ -49,7 +50,8 @@ router.get("/torneios/fase/:id",Root,TorneioController.Fase);
 router.get("/torneios/editFase/:param",Root,TorneioController.EditFase);
 router.get("/torneios/inserirJogador/:id",Root,TorneioController.InsertPlayer);
 router.get("/torneios/inscritos/:id",Root,TorneioController.Inscritos);
-router.get("/torneios/resultados/:id",Root,TorneioController.Resultados)
+router.get("/torneios/resultados/:id",Root,TorneioController.Resultados);
+router.get("/torneios/trocarDeck/:id",Root,TorneioController.TrocarDeck)
 router.post("/torneios/inserirJogadores",Root,TorneioController.InserirJogadores);
 //router.post('/torneios/atualizarJogador/:id',Root,PlayerController.Update);
 router.post("/torneios/inscrito/delete",Root,PlayerController.DeleteInscrito);
@@ -90,7 +92,7 @@ router.post("/jogadores/update",Auth,JogadorController.Update);
 router.get("/torneios/detalhe/:id",Auth,TorneioController.Detalhe);
 //router.get("/torneios/inscrever/:id",Auth,PlayerController.Inscrever);
 router.post("/torneios/inscrever/",Auth,PlayerController.Inscrever);
-router.get("/torneios/cancelar/:id",Auth,PlayerController.Cancelar);
+router.get("/torneios/cancelarJogador/:id",Auth,PlayerController.Cancelar);
 router.get("/torneios/old",Auth,PlayerController.Anteriores);
 router.get("/torneios/classificacao/:id",Auth,PlayerController.Classificacao);
 

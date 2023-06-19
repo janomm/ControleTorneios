@@ -7,12 +7,42 @@
             <h2>Novo Arquétipo</h2>
         </div>
         <div class="card-body">
-            <form method="post" action="/arquetipos/save">
+            <form method="post" action="/arquetipos/save" onsubmit="return validate(event,this)">
                 <input class="form-control" type="text" required name="nome" placeholder="Nome"><br> 
                 <button class="btn btn-success">Cadastrar</button>
             </form>
+            <br>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert" style='display:none'>
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
         </div>
     </div>
 </div>
 <%- include('../partials/footer.ejs') %>
-<%- include('../partials/scripts.ejs') %>
+<script>
+
+    async function validate(event,form){
+        event.preventDefault();
+        
+        var nome = document.getElementsByName("nome")[0].value
+        
+        var url = 'http://localhost:3000/ValidaInsertArquetipo';
+
+        try{
+            var err = await axios.post(url,{nome:nome});
+
+            if(err.data.err != undefined){
+                document.getElementById('alert').style = 'display:';
+                document.getElementById('alert').innerHTML = err.data.err;
+
+            } else {
+                document.getElementById('alert').style = 'display:none';
+                form.submit();
+            }
+        } catch(e){
+            console.log(e);
+        }
+    }
+</script>

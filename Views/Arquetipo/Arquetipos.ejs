@@ -11,12 +11,12 @@
             </tr>
         </thead>
         <tbody>
-            <% arquetipos.forEach(arquetipo => { %>
+            <% arquetipos.forEach((arquetipo,index) => { %>
                 <tr>
                     <td><%= arquetipo.nome %></td>
                     <td>
                         <form method="post" action="/arquetipos/delete" style="display: inline"
-                            onsubmit="confirmDelete(event,this);">
+                        onsubmit="confirmDelete(event,this,'<%= index %>');">
                             <input type="hidden" name="id" value="<%= arquetipo.id %>">
                             <button class="btn btn-danger">Deletar</button>
                         </form>
@@ -25,14 +25,34 @@
             <% }) %>
         </tbody>
     </table>
+    <br>
+    <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert" style='display:none'>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 </div>
 <%- include('../partials/footer.ejs') %>
 <script>
-    function confirmDelete(event, form){
+    async function confirmDelete(event, form, i){
         event.preventDefault();
-        var decision = confirm("Você quer deletar este arquétipo?");
-        if(decision){
-            form.submit();
-        }
+        document.getElementById('alert').style = 'display:none';
+
+        var id = document.getElementsByName("id")[i].value;
+
+        var url = 'http://localhost:3000/ValidaDeleteArquetipo';
+        try{
+            var err = await axios.post(url,{id:id});
+            if(err.data.err != undefined){
+                document.getElementById('alert').style = 'display:';
+                document.getElementById('alert').innerHTML = err.data.err;
+
+            } else {
+                var decision = confirm("Você quer deletar este arquétipo? ");
+                if(decision){
+                    form.submit();
+                }
+            }            
+        } catch(e){ }       
     }
-    </script>
+</script>

@@ -161,10 +161,22 @@ class TorneioController{
         }
     }
 
-    async Enable(req,res){
+    /*async Enable(req,res){
         var id = req.params.id;
         try{
             await Torneio.Enable(id);
+            res.redirect('/torneios');
+
+        } catch(e){
+            console.log(e);
+            res.redirect("/logout");
+        }
+    }*/
+
+    async Cancelar(req,res){
+        var id = req.params.id;
+        try{
+            await Torneio.Cancelar(id);
             res.redirect('/torneios');
 
         } catch(e){
@@ -217,41 +229,20 @@ class TorneioController{
         }
     }
 
-    async Inscritos2(req,res){
-        var id = req.params.id;
-        var jogadorTorneio = await JogadorTorneio.findJogadorTorneioByidTorneio(id)
-        var torneio = await Torneio.FindById(id);
-        //console.log("Torneio: " + torneio);
-
-        var dados = {
-            jogadores: jogadorTorneio,
-            torneio: torneio
-        }
-        
-        if(dados != undefined){
-            res.render("./Torneio/Inscritos",{dados});
-
-        } else {
-            res.redirect("/logout");
-        }
-    }
     async Inscritos(req,res){
         var id = req.params.id;
         var jogadores = await JogadorTorneio.FindAllJogadorTorneioInscritos(id);
         var torneio = await Torneio.FindById(id);
         var jogadoresTorneio = [];
 
-        //console.log(torneio);
-
         for(var i = 0 ; i < jogadores.length ; i++){
             var jt = jogadores[i];
-            //console.log("idFormato: " + torneio.idFormato);
             var decks = await Deck.FindAllByFormato(jt.idJogador,torneio.idFormato);
-            var node =
+            var node = 
                 {
                     jogador:jt,
                     decks:decks
-                }
+                };
                 jogadoresTorneio.push(node);            
         }
 
@@ -261,13 +252,33 @@ class TorneioController{
                 jogadores:jogadoresTorneio
             };
 
-            /*console.log("dados: " + dados.jogadores[0].jogador.nome);
-            console.log("dados: " + dados.jogadores[0].decks);*/
-
         if(dados != undefined){
             res.render("./Torneio/Inscritos",{dados});
 
         } else {
+            res.redirect("/logout");
+        }
+    }
+
+    async TrocarDeck(req,res){
+        var params = req.params.id;
+        
+        var idTorneio = params.split(';')[0];
+        var idJogador = params.split(';')[1];
+        var idDeck = params.split(';')[2];
+
+        try{
+            var jogadorTorneio = await JogadorTorneio.FindJogadorInTorneio(idTorneio,idJogador);
+            jogadorTorneio.idDeck = idDeck;
+            var trocou = await JogadorTorneio.Update(jogadorTorneio.idTorneio,jogadorTorneio.idJogador,jogadorTorneio.idDeck,jogadorTorneio.posicao,jogadorTorneio.pontos);
+            
+            if(trocou){
+                res.redirect('/torneios/inscritos/' + idTorneio);
+            } else {
+                res.redirect("/logout");
+            }
+        } catch(e){
+            console.log(e);
             res.redirect("/logout");
         }
     }

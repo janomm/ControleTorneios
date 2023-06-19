@@ -43,7 +43,7 @@ class FormatoController{
 
         try{
             await Formato.Delete(id);
-            var formatos = await Formatos.FindAll();
+            var formatos = await Formato.FindAll();
             res.render('./Formato/Formatos',{formatos});
         } catch(e){
             console.log(e);

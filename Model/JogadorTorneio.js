@@ -107,9 +107,11 @@ class JogadorTorenio{
 
     async FindJogadorInTorneio(idTorneio,idJogador){
         try{
-            var jogador = await knex.select().table('jogadortorneio').where({idJogador:idJogador,idTorneio:idTorneio});
+            var result = await knex.select()
+                .table('jogadortorneio')
+                .where({idJogador:idJogador,idTorneio:idTorneio});
 
-            return jogador;
+            return result[0];
 
         } catch(e){
             console.log(e);
@@ -119,7 +121,7 @@ class JogadorTorenio{
 
     async Delete(idTorneio,idJogador){
         try{
-            await  knex.delete().table('jogadorTorneio').where({idTorneio:idTorneio,idJogador,idJogador});
+            await knex.delete().table('jogadorTorneio').where({idTorneio:idTorneio,idJogador,idJogador});
 
             return true;
         } catch(e){
@@ -129,10 +131,10 @@ class JogadorTorenio{
     
     }
 
-    //Incompleto
-    async Update(idTorneio,idJogador,posicao,pontos){
+    async Update(idTorneio,idJogador,idDeck,posicao,pontos){
+        console.log()
 
-        var editJogadorTorneio = {posicao,pontos};
+        var editJogadorTorneio = {posicao,pontos,idDeck};
         try{
             await knex.update(editJogadorTorneio).table('JogadorTorneio').where({idTorneio:idTorneio,idJogador:idJogador});
             return true;
