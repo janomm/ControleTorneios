@@ -12,6 +12,7 @@ const RankingController = require('../Control/RankingController');
 const ArquetipoController = require("../Control/ArquetipoController");
 const DeckController = require('../Control/DeckController');
 const DeckImportController = require("../Control/DeckImportController");
+const PainelController = require('../Control/PainelController');
 
 const Auth = require('../Middleware/Auth');
 const Root = require('../Middleware/Root');
@@ -80,14 +81,18 @@ router.post("/arquetipos/delete",Root,ArquetipoController.Delete);
 router.get('/rankings',Root,RankingController.Index);
 router.get('/rankings/new',Root,RankingController.New);
 router.get('/rankings/view/:id',Root,RankingController.View);
+router.get('/rankings/viewJogador/:id',Auth,RankingController.ViewJogador);
 router.post('/rankings/save',Root,RankingController.Save);
 router.post('/rankings/delete',Root,RankingController.Delete);
+
+router.get('/meusRankings',Auth,RankingController.MeusRankings)
 
 // Rotas autenticadas
 
 //Players
 router.get("/perfil",Auth,PlayerController.Perfil);
 router.get("/home",Auth,PlayerController.Home);
+router.get('/admin',Root,PlayerController.Admin);
 router.post("/jogadores/update",Auth,JogadorController.Update);
 router.get("/torneios/detalhe/:id",Auth,TorneioController.Detalhe);
 //router.get("/torneios/inscrever/:id",Auth,PlayerController.Inscrever);
@@ -106,6 +111,10 @@ router.post("/decks/update",Auth,DeckController.Update);
 
 router.get("/importDeck",Auth,DeckImportController.Index);
 router.post("/import/deck",Auth,DeckImportController.Upload);
+
+//Painel Admin
+router.get('/cadastrosAdmin',Root,PainelController.CadastrosAdmin);
+router.get('/decksJogadores',Auth,PainelController.DecksJogadores);
 
 
 module.exports = router;

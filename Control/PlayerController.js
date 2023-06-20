@@ -23,6 +23,10 @@ class PlayerController{
 
     };
 
+    async Admin(req,res){
+        res.render('Index');
+    }
+
     async Perfil(req,res){
         var jogador = await Jogador.FindByEmail(req.session.user.email);
         if(jogador != undefined){

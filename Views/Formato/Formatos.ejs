@@ -2,7 +2,6 @@
 <%- include('../partials/navbar.ejs') %>
 <div class="container">
     <h2>Tipo de Formato</h2>
-    <a href="/formatos/new" class="btn btn-success">Inserir Formato</a>
     <hr>
     <table class="table table-bordered">
         <thead>
@@ -25,6 +24,8 @@
             <% }) %>
         </tbody>
     </table>
+    <a href="/formatos/new" class="btn btn-success">Inserir Formato</a>
+    <a href="/cadastrosAdmin" class="btn btn-warning">Voltar</a>
     <br>
     <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert" style='display:none'>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">

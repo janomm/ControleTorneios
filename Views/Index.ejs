@@ -2,5 +2,42 @@
 <%- include('partials/navbar.ejs') %>
 <div class="container">
     <h1>Controle de Torneios de Magic da Casa Mint</h1>
+    <hr>
+    <br>
+    <!--div class="container"-->
+        <div class="row">
+            <div class="col-sm">
+                <p></p>
+                <strong>Torneios</strong>
+                <div>
+                    <a href="/torneios" class="btn btn-primary btn-lg btn-block">Torneios</a>
+                </div>
+            </div>
+        
+            <div class="col-sm">
+                <p></p>
+                <strong>Rankings</strong>
+                <div>
+                    <a href="/rankings" class="btn btn-primary btn-lg btn-block">Rankings</a>
+                </div>
+            </div>
+        
+            <div class="col-sm">
+                <p></p>
+                <strong>Manutenção de Usuários</strong>
+                <div>
+                    <a href="/jogadores"class="btn btn-primary btn-lg btn-block">Usuários</a>
+                </div>
+            </div>
+        
+            <div class="col-sm">
+                <p></p>
+                <strong>Cadastros Básicos</strong>
+                <div>
+                    <a href="/cadastrosAdmin" class="btn btn-primary btn-lg btn-block">Cadastros</a>
+                </div>
+            </div>
+        </div>
+    <!--/div-->
 </div>
 <%- include('partials/footer.ejs') %>

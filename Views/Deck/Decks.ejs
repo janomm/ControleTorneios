@@ -2,7 +2,7 @@
 <%- include('../partials/navbarUser.ejs') %>
 <div class="container">
     <h2>Decks</h2>
-    <a href="/decks/new" class="btn btn-success">Inserir Deck</a>
+    
     <hr>
     <table class="table table-bordered">
         <thead>
@@ -30,6 +30,8 @@
             <% }) %>
         </tbody>
     </table>
+    <a href="/decks/new" class="btn btn-success">Inserir Deck</a>
+    <a href="/decksJogadores" class="btn btn-warning">Voltar</a>
 </div>
 <%- include('../partials/footer.ejs') %>
 <script>

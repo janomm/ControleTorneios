@@ -37,7 +37,8 @@ class UserController{
                         res.redirect("/home");
                     } else {
                         req.session.root = user;
-                        res.render('index')
+                        //res.render('index')
+                        res.redirect('/admin');
                     }
                 }
             }

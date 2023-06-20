@@ -1,8 +1,7 @@
 <%- include('../partials/header.ejs') %>
 <%- include('../partials/navbar.ejs') %>
 <div class="container">
-    <h2>Tipo de Torneios</h2>
-    <a href="/tipoTorneios/new" class="btn btn-success">Inserir Tipo de Torneio</a>
+    <h2>Tipo de Torneios</h2>    
     <hr>
     <table class="table table-bordered">
         <thead>
@@ -24,7 +23,9 @@
                 </tr>
             <% }) %>
         </tbody>
-    </table>
+    </table>    
+    <a href="/tipoTorneios/new" class="btn btn-success">Inserir Tipo de Torneio</a>
+    <a href="/cadastrosAdmin" class="btn btn-warning">Voltar</a>
     <br>
     <div class="alert alert-warning alert-dismissible fade show" role="alert" id="alert" style='display:none'>
         <button type="button" class="close" data-dismiss="alert" aria-label="Close">
