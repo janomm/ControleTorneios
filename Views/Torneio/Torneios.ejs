@@ -2,7 +2,6 @@
 <%- include('../partials/navbar.ejs') %>
 <div class="container">
     <h2>Torneios</h2>
-    <a href="/torneios/new" class="btn btn-success">Inserir Torneio</a>
     <hr>
     <table class="table table-bordered">
         <thead>
@@ -55,6 +54,8 @@
             <% }) %>
         </tbody>
     </table>
+    <a href="/torneios/new" class="btn btn-success">Inserir Torneio</a>
+    <a href="/admin" class="btn btn-warning">Voltar</a>
 </div>
 <%- include('../partials/footer.ejs') %>
 <script>
