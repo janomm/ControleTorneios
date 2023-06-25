@@ -234,7 +234,7 @@ class TorneioController{
     async Inscritos(req,res){
         var id = req.params.id;
         var jogadores = await JogadorTorneio.FindAllJogadorTorneioInscritos(id);
-        var torneio = await Torneio.FindById(id);
+        var torneio = await Torneio.FindById(id,true);
         var jogadoresTorneio = [];
 
         for(var i = 0 ; i < jogadores.length ; i++){
@@ -289,7 +289,7 @@ class TorneioController{
         var id = req.params.id;
         
         var jogadorTorneio = await JogadorTorneio.findJogadorTorneioByidTorneio(id)
-        var torneio = await Torneio.FindById(id);
+        var torneio = await Torneio.FindById(id,true);
         //console.log("Torneio: " + torneio);
 
         var dados = {

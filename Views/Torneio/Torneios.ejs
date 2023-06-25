@@ -23,7 +23,7 @@
                     <th><%= torneio.descFase %></th>
                     <td>
 
-                        <% if(torneio.fase > 0) { %>
+                        <% if(torneio.fase > 0 && torneio.fase < 5) { %>
                             <a class="btn btn-primary" href="/torneios/fase/<%= torneio.id %>">Alterar Fase</a>
                         <%}%>
                         
@@ -48,6 +48,9 @@
                             <strong><a class="btn btn-success" href="/torneios/resultados/<%= torneio.id %>">Inserir Resultado</a></strong>
                         <% }  %>
                         
+                        <% if(torneio.fase == 5) { %>
+                            <strong><a class="btn btn-success" href="/torneios/classificacaoGeral/<%= torneio.id %>">Classificação Final</a></strong>
+                        <% }  %>
 
                     </td>
                 </tr>

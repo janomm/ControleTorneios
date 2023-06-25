@@ -84,7 +84,7 @@ class PlayerController{
     async Classificacao(req,res){
         var id = req.params.id;
         var jogadorTorneio = await JogadorTorneio.findJogadorTorneioByidTorneio(id)
-        var torneio = await Torneio.FindById(id);
+        var torneio = await Torneio.FindById(id,true);
 
         var dados = {
             jogadores: jogadorTorneio,
@@ -94,6 +94,25 @@ class PlayerController{
 
         if(dados != undefined){
             res.render("./Torneio/ClassificacaoJogadores",{dados});
+
+        } else {
+            res.redirect("/logout");
+        }
+    }
+
+    async ClassificacaoGeral(req,res){
+        var id = req.params.id;
+        var jogadorTorneio = await JogadorTorneio.findJogadorTorneioByidTorneio(id)
+        var torneio = await Torneio.FindById(id,true);
+
+        var dados = {
+            jogadores: jogadorTorneio,
+            torneio: torneio
+        }
+        //console.log('jogadorTorneio: ' + jogadorTorneio + ", torneio: " + torneio);
+
+        if(dados != undefined){
+            res.render("./Torneio/ClassificacaoGeral",{dados});
 
         } else {
             res.redirect("/logout");

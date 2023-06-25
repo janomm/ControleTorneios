@@ -4,7 +4,7 @@
     <hr>
     <div class="card">
         <div class="card-header">
-            <h2>Novo Deck</h2>
+            <h2><%= deck.nome %> - [ <%= deck.nomeFormato %> ] - [ <%= deck.nomeArquetipo %> ]</h2>
         </div>
         <div class="card-body">
             <form method="post" action="/decks/save">
@@ -25,7 +25,6 @@
                 </select><br>
 
                 <button class="btn btn-success">Cadastrar</button>
-                <a href="/decks" class="btn btn-warning">Voltar</a>
             </form>
         </div>
     </div>

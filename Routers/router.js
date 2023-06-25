@@ -100,6 +100,7 @@ router.post("/torneios/inscrever/",Auth,PlayerController.Inscrever);
 router.get("/torneios/cancelarJogador/:id",Auth,PlayerController.Cancelar);
 router.get("/torneios/old",Auth,PlayerController.Anteriores);
 router.get("/torneios/classificacao/:id",Auth,PlayerController.Classificacao);
+router.get("/torneios/classificacaoGeral/:id",Root,PlayerController.ClassificacaoGeral);
 
 //Decks
 router.get('/decks',Auth,DeckController.Index);
@@ -108,6 +109,9 @@ router.get("/decks/edit/:id",Auth,DeckController.Edit);
 router.post('/decks/save',Auth,DeckController.Save);
 router.post("/decks/delete",Auth,DeckController.Delete);
 router.post("/decks/update",Auth,DeckController.Update);
+
+//Listar Deck scryfall
+router.get('/listaDeck/:id',Auth,DeckController.ListaDeck)
 
 router.get("/importDeck",Auth,DeckImportController.Index);
 router.post("/import/deck",Auth,DeckImportController.Upload);

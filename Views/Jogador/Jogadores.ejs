@@ -24,7 +24,7 @@
                         <!--a href="/jogadores/edit/< %= jogador.id %> " class="btn btn-warning">Editar</a-->
                         
                         <% if(jogador.status == 1){ %>
-                            <a href="/jogadores/enable/<%= jogador.id %>" class="btn btn-warning">Desabilitar</a>
+                            <a href="/jogadores/enable/<%= jogador.id %>" class="btn btn-warning" onclick="confirmDelete()">Desabilitar</a>
                         <%} else { %>
                             <a href="/jogadores/enable/<%= jogador.id %>" class="btn btn-success">Habilitar</a>
                         <%}%>
@@ -44,11 +44,11 @@
 </div>
 <%- include('../partials/footer.ejs') %>
 <script>
-    function confirmDelete(event, form){
-        event.preventDefault();
-        var decision = confirm("Você quer deletar este jogador?");
-        if(decision){
-            form.submit();
+    //function confirmDelete(event, form){
+    function confirmDelete(){
+        var decision = confirm("Você quer desabilitar este jogador?");
+        if(!decision){
+            event.preventDefault();
         }
     }
     </script>

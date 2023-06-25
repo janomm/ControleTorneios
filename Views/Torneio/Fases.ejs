@@ -8,15 +8,19 @@
 
     <table class="table table-bordered">
         <thead>
-            <% if(dados.torneio.fase == 1 || dados.torneio.fase == 2 ){ %>
+            <% if(dados.torneio.fase == 1 || dados.torneio.fase == 2 || dados.torneio.fase == 4){ %>
                 <tr><th>Atual</th> <th>Próximo</th> </tr>
             <%} else { %>
-                <tr><th>Anterior</th> <th>Atual</th> <th>Próximo</th> </tr>
+                <% if(dados.torneio.fase != 5){ %>
+                    <tr><th>Anterior</th> <th>Atual</th> <th>Próximo</th> </tr>
+                <%} else { %>
+                    <tr><th>Anterior</th> <th>Atual</th> </tr>
+                <%} %>
             <%} %>
         </thead>
         <tbody>
             <tr>
-                <% if(dados.torneio.fase > 2) { %>
+                <% if(dados.torneio.fase > 2 && dados.torneio.fase != 4) { %>
                     <td>                    
                         <a href="/torneios/editFase/<%= dados.torneio.fase - 1 %>&<%= dados.torneio.id %>" class="btn btn-danger">
                             << <%= dados.lst[dados.torneio.fase - 1] %>
@@ -37,5 +41,6 @@
             </tr>
         </tbody>
     </table>
+    <a href="/torneios" class="btn btn-warning">Voltar</a>
 </div>
 <%- include('../partials/footer.ejs') %>

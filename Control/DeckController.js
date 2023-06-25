@@ -88,6 +88,16 @@ class DeckController{
             res.redirect("/logout");
         }
     }
+
+    async ListaDeck(req,res){
+        console.log("listadeck")
+        var id = req.params.id;
+        //var jogador = await Jogador.FindByEmail(req.session.user.email);
+        var deck = await Deck.FindById(id);
+
+        req.render('/Deck/ListaDeck',{deck});
+
+    }
 }
 
 module.exports = new DeckController();
